@@ -30,7 +30,11 @@ public class Prototype_Jump : MonoBehaviour
             //Изменение прогресса прыжка
             progress = expiriedTime / duration;
 
+<<<<<<< HEAD
             //Изменяем позицию (прибавляем) по оси Y (просто наводись на непонятные методы и читай)
+=======
+            //Изменяем позицию (прибавляем) по оси Y
+>>>>>>> 9697546c9723f362b118cf4a7ae7643fc545175d
             jumper.position += new Vector3(0, _YAnimation.Evaluate(progress) * _height, 0);
 
             yield return null;
