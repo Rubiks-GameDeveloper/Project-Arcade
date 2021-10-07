@@ -18,7 +18,7 @@ public class AttackPrototype : MonoBehaviour
     private void FixedUpdate()
     {
         //Опять же, так не надо писать!!! Проверяем, нажал ли игрок левую кнопку мыши, если нажал убираем врага
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             Destroy(enemyData);
             enemyData = null;
