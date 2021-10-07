@@ -15,7 +15,7 @@ public class CameraTransform : MonoBehaviour
     {
         if (player.transform.position.y > -2f && isPlayerMove)
         {
-            transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 0.3f, -10);
+            transform.position = new Vector3(player.transform.position.x, 0, -10);
         }
     }
 }
