@@ -16,6 +16,7 @@ public class Prototype_PlayerMovementLeft : MonoBehaviour, IPointerDownHandler, 
     {
         CameraTransform.isPlayerMove = true;
         isTapInButton = true;
+        if (player.transform.rotation.y <= 0) player.transform.rotation = Quaternion.AngleAxis(180f, Vector3.down);
     }
     //Проверяю, убрал ли игрок палец с кнопки(левой)
     public void OnPointerUp(PointerEventData eventData)
