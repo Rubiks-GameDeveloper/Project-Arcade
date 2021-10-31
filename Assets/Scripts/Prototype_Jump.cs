@@ -25,7 +25,7 @@ public class Prototype_Jump : MonoBehaviour
 
         while (progress < 1)
         {
-            expiriedTime += Time.deltaTime;
+            expiriedTime += Time.fixedDeltaTime * 0.1f;
 
             //Изменение прогресса прыжка
             progress = expiriedTime / duration;
