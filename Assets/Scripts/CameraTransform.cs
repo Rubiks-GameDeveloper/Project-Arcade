@@ -29,11 +29,10 @@ public class CameraTransform : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //if (!PrototypePlayerMovement.IsPlayerMove) return;
         var cameraPos = gameObject.transform.position;
         var playerPos = player.transform.position;
-        Vector3 endPos = new Vector3(playerPos.x, playerPos.y + 2, cameraPos.z);
-        gameObject.transform.position = Vector3.Lerp(cameraPos, endPos, Time.fixedDeltaTime * velocity);
+        Vector3 endCameraPos = new Vector3(playerPos.x + 1, playerPos.y + 2, cameraPos.z);
+        gameObject.transform.position = Vector3.Lerp(cameraPos, endCameraPos, Time.fixedDeltaTime * velocity);
     }
 
     private IEnumerator MainCameraSizeChangeEnumerator(float sizeChangeDuration, bool isCameraIncrease)
