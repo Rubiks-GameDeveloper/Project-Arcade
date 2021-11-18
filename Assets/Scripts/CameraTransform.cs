@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Numerics;
 using UnityEngine;
-using UnityEngine.Events;
+using Vector3 = UnityEngine.Vector3;
+
 public class CameraTransform : MonoBehaviour
 {
     [SerializeField] private GameObject player;
@@ -13,79 +15,56 @@ public class CameraTransform : MonoBehaviour
 
     [SerializeField] private float duration = 0.5f;
 
-    private Coroutine data;
+    [SerializeField] private float velocity = 0.3f;
+    
     private void Start()
     {
         gameObject.transform.position += new Vector3(0, 2, 0);
 
-        joystick.IsTouchIn.AddListener(CameraResize);
-        joystick.IsTouchOut.AddListener(CameraResize);
+        joystick.IsTouchIn.AddListener(CameraSizeIncrease);
+        joystick.IsTouchOut.AddListener(CameraSizeDecrease);
         
-        GetComponent<Camera>().orthographicSize = 5;
+        GetComponent<Camera>().orthographicSize = 5.872686f;
     }
 
     private void FixedUpdate()
     {
-        if (!PrototypePlayerMovement.IsPlayerMove) return;
-        var o = gameObject;
-        o.transform.position = new Vector3(player.transform.position.x, 2, o.transform.position.z);
+        //if (!PrototypePlayerMovement.IsPlayerMove) return;
+        var cameraPos = gameObject.transform.position;
+        var playerPos = player.transform.position;
+        Vector3 endPos = new Vector3(playerPos.x, playerPos.y + 2, cameraPos.z);
+        gameObject.transform.position = Vector3.Lerp(cameraPos, endPos, Time.fixedDeltaTime * velocity);
     }
 
-    private IEnumerator MainCameraSizeChangeEnumerator(float duration)
+    private IEnumerator MainCameraSizeChangeEnumerator(float sizeChangeDuration, bool isCameraIncrease)
     {
-        
-        float expiriedTime = 0;
+        float expiredTime = 0;
         float progress = 0;
 
-        if (mainCamera.orthographicSize < 6)
+        const float expiredTimeIncrease = 0.5f;
+        
+        while (progress < 1)
         {
-            while (progress < 1)
-            {
-                expiriedTime += Time.fixedDeltaTime * 0.1f;
+            expiredTime += Time.fixedDeltaTime * expiredTimeIncrease;
+        
+            progress = expiredTime / sizeChangeDuration;
+            mainCamera.orthographicSize += CameraAnimCurve(isCameraIncrease, progress) * height;
             
-                progress = expiriedTime / duration;
-                mainCamera.orthographicSize += cameraSizeChangingCurve.Evaluate(progress) * height;
-
-                yield return null;
-            } 
+            yield return null;
         }
-        else if (mainCamera.orthographicSize >= 6)
-        {
-            while (progress < 1)
-            {
-                expiriedTime += Time.fixedDeltaTime * 0.1f;
-            
-                progress = expiriedTime / duration;
-                mainCamera.orthographicSize -= cameraSizeChangingCurve.Evaluate(progress) * height;
-
-                yield return null;
-            }
-        }
-
-        data = null;
+    }
+    private float CameraAnimCurve(bool isCameraIncrease, float progress)
+    {
+        if (isCameraIncrease) return cameraSizeChangingCurve.Evaluate(progress);
+        return -cameraSizeChangingCurve.Evaluate(progress);
+    }
+    private void CameraSizeIncrease()
+    {
+        StartCoroutine(MainCameraSizeChangeEnumerator(duration, true));
     }
 
-    private void CameraResize()
+    private void CameraSizeDecrease()
     {
-        if (mainCamera.orthographicSize < 6)
-        { 
-            if (data == null) data = StartCoroutine(MainCameraSizeChangeEnumerator(duration));
-            /*
-            else
-            {
-                StopCoroutine(data);
-                data = null;
-            }*/
-        }
-        else if (mainCamera.orthographicSize >= 6)
-        {
-            if (data == null) data = StartCoroutine(MainCameraSizeChangeEnumerator(duration));
-            /*
-            else
-            {
-                StopCoroutine(data);
-                data = null;
-            }*/
-        }
+        StartCoroutine(MainCameraSizeChangeEnumerator(duration, false));
     }
 }
