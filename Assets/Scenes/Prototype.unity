@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 263880714}
   m_Layer: 0
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -623,7 +623,7 @@ GameObject:
   - component: {fileID: 780992181}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1393,12 +1393,12 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.044999998
       value: 0.0011603672
-      inSlope: 45.07293
-      outSlope: 45.07293
+      inSlope: 19.010588
+      outSlope: 19.010588
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.05801483
+      outWeight: 0.12983279
     - serializedVersion: 3
       time: 0.10410852
       value: 1.4130571
@@ -1429,8 +1429,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _duration: 0.01
-  _height: 1.2
+  _duration: 0.36
+  _height: 0.14
+  groundChecker: {fileID: 1855893152}
 --- !u!114 &1855893155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1443,7 +1444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d0113d8fb739aa4790cf1d99f015650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.2
+  speed: 0.17
   player: {fileID: 1855893149}
   playerMovementJoystick: {fileID: 63448777}
 --- !u!1 &1862024168
