@@ -1365,7 +1365,7 @@ Rigidbody2D:
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 1
+  m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
@@ -1429,8 +1429,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _duration: 0.36
-  _height: 0.14
+  duration: 0.12
+  height: 0.5
   groundChecker: {fileID: 1855893152}
 --- !u!114 &1855893155
 MonoBehaviour:
