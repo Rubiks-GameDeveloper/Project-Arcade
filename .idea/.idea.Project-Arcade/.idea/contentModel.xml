@@ -32,6 +32,8 @@
           <e p="AttackPrototype.cs" t="Include" />
           <e p="CameraTransform.cs" t="Include" />
           <e p="EnemyDetector.cs" t="Include" />
+          <e p="MainMenu.cs" t="Include" />
+          <e p="PauseMenu.cs" t="Include" />
           <e p="PrototypeJump.cs" t="Include" />
           <e p="PrototypePlayerMovement.cs" t="Include" />
         </e>
