@@ -30,6 +30,7 @@
             </e>
           </e>
         </e>
+        <e p="OptionMenu.cs" t="Include" />
         <e p="Scripts" t="Include">
           <e p="AttackPrototype.cs" t="Include" />
           <e p="CameraTransform.cs" t="Include" />
