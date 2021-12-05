@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -36,6 +37,9 @@ public class PrototypeJump : MonoBehaviour
         float expiredTime = 0;
         float progress = 0;
 
+        gameObject.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
+        
+        
         while (progress < 1)
         {
             expiredTime += Time.fixedDeltaTime * 0.1f;
@@ -46,8 +50,15 @@ public class PrototypeJump : MonoBehaviour
 
             yield return null;
         }
+        yield return new WaitForSeconds(0.3f);
+        gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;
     }
-
+//
+    private void Update()
+    {
+        if (Input.GetButtonDown("Jump")) PlayerJump();
+    }
+//
     private void FixedUpdate()
     {
         GroundCheck();
@@ -56,7 +67,7 @@ public class PrototypeJump : MonoBehaviour
     private void GroundCheck()
     {
         Collider2D[] colliders = new Collider2D[25];
-        var res = Physics2D.OverlapCircleNonAlloc(groundChecker.position, 0.6f, colliders);
+        var res = Physics2D.OverlapCircleNonAlloc(groundChecker.position, 0.85f, colliders);
  
         if (res > 1)
         {

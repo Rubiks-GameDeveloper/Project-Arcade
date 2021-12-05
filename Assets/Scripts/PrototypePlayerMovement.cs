@@ -1,35 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PrototypePlayerMovement : MonoBehaviour
 {
-    public float speed;
-    [SerializeField] private GameObject player;
+    [SerializeField] private VectorMovement playerMove;
     [SerializeField] private Joystick playerMovementJoystick;
-
-    public static bool IsPlayerMove = false;
-    private bool _isPlayerNotNull;
-
-    void Start()
-    {
-        player = gameObject;
-        _isPlayerNotNull = player != null;
-    }
 
     private void FixedUpdate()
     {
-        if (playerMovementJoystick.Horizontal != 0 && _isPlayerNotNull)
+        if (playerMovementJoystick.Horizontal != 0)
         {
-            IsPlayerMove = true;
-
-            player.transform.position += new Vector3(playerMovementJoystick.Horizontal * speed, 0, 0);
+            playerMove.Move(new Vector2(playerMovementJoystick.Horizontal, 0));
             if (playerMovementJoystick.Horizontal < 0)
-                player.transform.rotation = Quaternion.AngleAxis(180f, Vector3.down);
+                gameObject.transform.rotation = Quaternion.AngleAxis(180f, Vector3.down);
             else if (playerMovementJoystick.Horizontal >= 0)
-                player.transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+                gameObject.transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
         }
-        else
-            IsPlayerMove = false;
     }
 }

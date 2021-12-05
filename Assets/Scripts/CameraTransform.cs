@@ -30,7 +30,7 @@ public class CameraTransform : MonoBehaviour
     {
         var cameraPos = gameObject.transform.position;
         var playerPos = player.transform.position;
-        Vector3 endCameraPos = new Vector3(playerPos.x + 1, playerPos.y + 2, cameraPos.z);
+        Vector3 endCameraPos = new Vector3(playerPos.x + 1, playerPos.y + 3.5f, cameraPos.z);
         gameObject.transform.position = Vector3.Lerp(cameraPos, endCameraPos, Time.fixedDeltaTime * velocity);
     }
 
