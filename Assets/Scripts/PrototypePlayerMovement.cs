@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PrototypePlayerMovement : MonoBehaviour
 {
@@ -15,5 +16,10 @@ public class PrototypePlayerMovement : MonoBehaviour
             else if (playerMovementJoystick.Horizontal >= 0)
                 gameObject.transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        SceneManager.LoadScene(1);
     }
 }
