@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 public class DoorsTransformer : MonoBehaviour
 {
     [SerializeField] private Transform player;

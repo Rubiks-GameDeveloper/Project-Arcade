@@ -30,16 +30,20 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="AttackPrototype.cs" t="Include" />
-          <e p="CameraTransform.cs" t="Include" />
           <e p="DoorsTransformer.cs" t="Include" />
           <e p="EnemyDetector.cs" t="Include" />
-          <e p="MainMenu.cs" t="Include" />
-          <e p="OptionMenu.cs" t="Include" />
-          <e p="PauseMenu.cs" t="Include" />
-          <e p="PrototypeJump.cs" t="Include" />
-          <e p="PrototypePlayerMovement.cs" t="Include" />
-          <e p="SurfaceCollector.cs" t="Include" />
-          <e p="VectorMovement.cs" t="Include" />
+          <e p="PlayerTransformScripts" t="Include">
+            <e p="CameraTransform.cs" t="Include" />
+            <e p="PlayerProgrammingTransformer.cs" t="Include" />
+            <e p="PrototypeJump.cs" t="Include" />
+            <e p="SurfaceCollector.cs" t="Include" />
+            <e p="VectorMovement.cs" t="Include" />
+          </e>
+          <e p="UIScripts" t="Include">
+            <e p="MainMenu.cs" t="Include" />
+            <e p="OptionMenu.cs" t="Include" />
+            <e p="PauseMenu.cs" t="Include" />
+          </e>
         </e>
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">
