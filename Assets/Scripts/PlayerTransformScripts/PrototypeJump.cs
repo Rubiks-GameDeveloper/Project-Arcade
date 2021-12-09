@@ -10,20 +10,21 @@ public class PrototypeJump : MonoBehaviour
     [SerializeField] private float height = 1;
 
     private Rigidbody2D rb;
-    private int _jumpCount = 2;
     private Coroutine _currentJump;
+
+    public int _jumpCount = 2;
     private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
     }
-    private void PlayAnimation(Transform jumper, float duration, bool _onGround, bool _isJumped)
+    private void PlayAnimation(Transform jumper, float duration)
     {
-        if (_onGround)
+        if (_jumpCount == 2)
         {
             _jumpCount -= 1;
             _currentJump = StartCoroutine(AnimationPlaying(jumper, duration));
         }
-        else if (_isJumped && _jumpCount > 0)
+        else if (_jumpCount == 1)
         {
             _jumpCount -= 1;
             StopCoroutine(_currentJump);
@@ -35,7 +36,7 @@ public class PrototypeJump : MonoBehaviour
         float expiredTime = 0;
         float progress = 0;
 
-        rb.gravityScale = 0.75f;
+        rb.gravityScale = 0.9f;
 
         while (progress < 1)
         {
@@ -48,12 +49,11 @@ public class PrototypeJump : MonoBehaviour
             
             yield return null;
         }
-        yield return new WaitForSeconds(0.15f);
+        yield return new WaitForSeconds(0.05f);
         rb.gravityScale = 1;
     }
-    public void PlayerJump(bool _onGround, bool _isJumped)
+    public void PlayerJump()
     {
-        if (_onGround && !_isJumped) _jumpCount = 2;
-        PlayAnimation(transform, timeDuration, _onGround, _isJumped);
+        PlayAnimation(transform, timeDuration);
     }
 }

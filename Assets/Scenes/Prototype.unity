@@ -720,7 +720,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 471906645}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 26.12, y: 3.44, z: 0}
+  m_LocalPosition: {x: 21.79, y: 3.65, z: 0}
   m_LocalScale: {x: 6.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -903,7 +903,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 585408657}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.33, y: -0.13, z: 29.313745}
+  m_LocalPosition: {x: -5.33, y: -0.13, z: 18.9}
   m_LocalScale: {x: 27, y: 12, z: 1}
   m_Children: []
   m_Father: {fileID: 834931878}
@@ -985,7 +985,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 690058732}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.8, y: -0.22, z: 29.313745}
+  m_LocalPosition: {x: 2.8, y: -0.22, z: 23.64}
   m_LocalScale: {x: 27, y: 12, z: 1}
   m_Children: []
   m_Father: {fileID: 834931878}
@@ -1117,6 +1117,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721426976}
   m_CullTransparentMesh: 1
+--- !u!1 &746173451
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 746173452}
+  m_Layer: 0
+  m_Name: GroundChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &746173452
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746173451}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4259628583596928996}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &780992180
 GameObject:
   m_ObjectHideFlags: 0
@@ -1323,7 +1353,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &834931877
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2109,7 +2139,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1649016972}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 39.95, y: 4.51, z: 0}
+  m_LocalPosition: {x: 33.48, y: 3.66, z: 0}
   m_LocalScale: {x: 6.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2838,6 +2868,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4259628583036354880, guid: 02918c5c0f655b54baabd1095dac3c78, type: 3}
+      propertyPath: groundChecker
+      value: 
+      objectReference: {fileID: 746173452}
+    - target: {fileID: 4259628583036354880, guid: 02918c5c0f655b54baabd1095dac3c78, type: 3}
       propertyPath: playerJoystick
       value: 
       objectReference: {fileID: 63448777}
@@ -2891,3 +2925,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02918c5c0f655b54baabd1095dac3c78, type: 3}
+--- !u!4 &4259628583596928996 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4259628583036354883, guid: 02918c5c0f655b54baabd1095dac3c78, type: 3}
+  m_PrefabInstance: {fileID: 4259628583596928995}
+  m_PrefabAsset: {fileID: 0}

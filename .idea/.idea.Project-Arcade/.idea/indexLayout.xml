@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelUserStore">
-    <attachedFolders />
-    <explicitIncludes>
+    <attachedFolders>
       <Path>../../../AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.2d.animation@5.0.9</Path>
       <Path>../../../AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.2d.psdimporter@4.1.2</Path>
       <Path>../../../AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.2d.spriteshape@5.1.6</Path>
       <Path>../../../AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.collab-proxy@1.15.4</Path>
       <Path>../../../AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ide.visualstudio@2.0.12</Path>
+    </attachedFolders>
+    <explicitIncludes>
       <Path>Assets</Path>
       <Path>Library/PackageCache/com.unity.2d.animation@5.0.9</Path>
       <Path>Library/PackageCache/com.unity.2d.common@4.0.3</Path>
@@ -37,6 +38,7 @@
       <Path>.vs</Path>
       <Path>Library</Path>
       <Path>Logs</Path>
+      <Path>Temp</Path>
       <Path>UserSettings</Path>
       <Path>obj</Path>
     </explicitExcludes>

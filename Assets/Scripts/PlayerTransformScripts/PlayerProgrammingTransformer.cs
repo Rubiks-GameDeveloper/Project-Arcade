@@ -9,10 +9,8 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     [SerializeField] private VectorMovement playerMove;
 
     private bool _onGround;
-    private bool _isJumped;
 
     [SerializeField] private Transform groundChecker;
-    private Coroutine _dataGroundCheckCoroutine;
 
     private void PlayerMovement()
     {
@@ -27,41 +25,22 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     }
     public void Jump()
     {
-        jump.PlayerJump(_onGround, _isJumped);
-    } 
-    private void GroundCheck()
-        {
-            Collider2D[] colliders = new Collider2D[25];
-            var res = Physics2D.OverlapCircleNonAlloc(groundChecker.position, 0.85f, colliders);
-        
-            if (res > 1)
-            {
-                foreach (var item in colliders)
-                {
-                    if (item.gameObject.CompareTag("Ground"))
-                    {
-                        _onGround = true;
-                        _isJumped = false;
-                        return;
-                    }
-                }
-            }
-            if (_dataGroundCheckCoroutine == null)
-            {
-                _dataGroundCheckCoroutine = StartCoroutine(PlayerGroundCheck());
-            }
-        }
-    private IEnumerator PlayerGroundCheck()
+        jump.PlayerJump();
+    }
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        yield return new WaitForSeconds(0.1f);
-        _onGround = false;
-        _isJumped = true;
-        _dataGroundCheckCoroutine = null;
-        yield return new WaitForFixedUpdate();
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            jump._jumpCount = 2;
+            _onGround = true;
+        }
+        else
+        {
+            _onGround = false;
+        }
     }
     private void FixedUpdate()
     {
-        GroundCheck();
         PlayerMovement();
         if (Input.GetButtonDown("Jump")) Jump();
     }
