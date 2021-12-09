@@ -59,7 +59,6 @@ public class PlayerProgrammingTransformer : MonoBehaviour
         _dataGroundCheckCoroutine = null;
         yield return new WaitForFixedUpdate();
     }
-
     private void FixedUpdate()
     {
         GroundCheck();
