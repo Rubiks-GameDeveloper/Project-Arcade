@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\User\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\User\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_Project-Arcade.-610201831.00" t="ExcludeRecursive" />
-    <e p="C:\Users\User\Documents\GitHub\Project-Arcade" t="IncludeRecursive">
+    <e p="C:\Projects\Project-Arcade" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
@@ -32,13 +30,20 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="AttackPrototype.cs" t="Include" />
-          <e p="CameraTransform.cs" t="Include" />
+          <e p="DoorsTransformer.cs" t="Include" />
           <e p="EnemyDetector.cs" t="Include" />
-          <e p="MainMenu.cs" t="Include" />
-          <e p="OptionMenu.cs" t="Include" />
-          <e p="PauseMenu.cs" t="Include" />
-          <e p="PrototypeJump.cs" t="Include" />
-          <e p="PrototypePlayerMovement.cs" t="Include" />
+          <e p="PlayerTransformScripts" t="Include">
+            <e p="CameraTransform.cs" t="Include" />
+            <e p="PlayerProgrammingTransformer.cs" t="Include" />
+            <e p="PrototypeJump.cs" t="Include" />
+            <e p="SurfaceCollector.cs" t="Include" />
+            <e p="VectorMovement.cs" t="Include" />
+          </e>
+          <e p="UIScripts" t="Include">
+            <e p="MainMenu.cs" t="Include" />
+            <e p="OptionMenu.cs" t="Include" />
+            <e p="PauseMenu.cs" t="Include" />
+          </e>
         </e>
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">
@@ -77,5 +82,7 @@
       <e p="Project-Arcade.sln" t="IncludeFlat" />
       <e p="Temp\Bin" t="ExcludeRecursive" />
     </e>
+    <e p="C:\Users\Grigorii\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Grigorii\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_Project-Arcade.883135443.00" t="ExcludeRecursive" />
   </component>
 </project>
