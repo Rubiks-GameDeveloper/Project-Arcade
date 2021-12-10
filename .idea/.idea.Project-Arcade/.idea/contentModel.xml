@@ -32,6 +32,11 @@
           <e p="AttackPrototype.cs" t="Include" />
           <e p="DoorsTransformer.cs" t="Include" />
           <e p="EnemyDetector.cs" t="Include" />
+          <e p="FightSystem" t="Include">
+            <e p="Enemy.cs" t="Include" />
+            <e p="ProgrammingPlayerFightSystem.cs" t="Include" />
+            <e p="SuperSquirrel.cs" t="Include" />
+          </e>
           <e p="PlayerTransformScripts" t="Include">
             <e p="CameraTransform.cs" t="Include" />
             <e p="PlayerProgrammingTransformer.cs" t="Include" />
