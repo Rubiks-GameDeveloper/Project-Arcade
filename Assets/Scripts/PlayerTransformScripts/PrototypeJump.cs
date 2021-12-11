@@ -9,24 +9,25 @@ public class PrototypeJump : MonoBehaviour
     [SerializeField] private float timeDuration = 1;
     [SerializeField] private float height = 1;
 
-    private Rigidbody2D rb;
+    private Rigidbody2D _rb;
     private Coroutine _currentJump;
 
-    public int _jumpCount = 2;
+    public int jumpCount = 2;
     private void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody2D>();
+        _rb = gameObject.GetComponent<Rigidbody2D>();
     }
     private void PlayAnimation(Transform jumper, float duration)
     {
-        if (_jumpCount == 2)
+        
+        if (jumpCount == 2)
         {
-            _jumpCount -= 1;
+            jumpCount -= 1;
             _currentJump = StartCoroutine(AnimationPlaying(jumper, duration));
         }
-        else if (_jumpCount == 1)
+        else if (jumpCount == 1)
         {
-            _jumpCount -= 1;
+            jumpCount -= 1;
             StopCoroutine(_currentJump);
             StartCoroutine(AnimationPlaying(jumper, duration));
         }
@@ -36,7 +37,7 @@ public class PrototypeJump : MonoBehaviour
         float expiredTime = 0;
         float progress = 0;
 
-        rb.gravityScale = 0.9f;
+        _rb.gravityScale = 0.9f;
 
         while (progress < 1)
         {
@@ -44,16 +45,17 @@ public class PrototypeJump : MonoBehaviour
             
             progress = expiredTime / jumpDuration;
             
-            if (_jumpCount == 0) jumper.position += new Vector3(0, _YAnimation.Evaluate(progress) * (height * 1.3f), 0);
+            if (jumpCount == 0) jumper.position += new Vector3(0, _YAnimation.Evaluate(progress) * (height * 1.3f), 0);
             else jumper.position += new Vector3(0, _YAnimation.Evaluate(progress) * height, 0);
             
             yield return null;
         }
         yield return new WaitForSeconds(0.05f);
-        rb.gravityScale = 1;
+        _rb.gravityScale = 1;
     }
-    public void PlayerJump()
+    public void PlayerJump(Animator animator)
     {
+        animator.SetTrigger("Jump");
         PlayAnimation(transform, timeDuration);
     }
 }
