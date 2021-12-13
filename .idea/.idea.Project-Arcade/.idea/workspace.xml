@@ -28,16 +28,11 @@
     <list default="true" id="937acea6-2954-430e-8f2a-53aaaf66f35a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/riderModule.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Pixel Adventure 1/Assets/Terrain/Terrain (16x16) 1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Pixel Adventure 1/Assets/Terrain/Terrain (16x16) 1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Pixel Adventure 1/Assets/Terrain/Terrain Sliced (16x16).png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Pixel Adventure 1/Assets/Terrain/Terrain Sliced (16x16).png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/FirstLocation.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/FirstLocation.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Prototype.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Prototype.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FightSystem/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/Enemy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FightSystem/ProgrammingPlayerFightSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/ProgrammingPlayerFightSystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FightSystem/SuperSquirrel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/SuperSquirrel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PlayerProgrammingTransformer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PlayerProgrammingTransformer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PrototypeJump.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PrototypeJump.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/паук-removebg-preview.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/паук-removebg-preview.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,9 +44,9 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/FightSystem/SuperSquirrel.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/CameraTransform.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/FightSystem/ProgrammingPlayerFightSystem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/DoorsTransformer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/FightSystem/ProgrammingPlayerFightSystem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/CameraTransform.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -69,6 +64,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/FightSystem/ProgrammingPlayerFightSystem.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PlayerProgrammingTransformer.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FightSystem/Enemy.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Portal_Ledder.cs" />
       </list>
     </option>
   </component>
@@ -128,6 +124,7 @@
       <workItem from="1639158294011" duration="7435000" />
       <workItem from="1639171378427" duration="107000" />
       <workItem from="1639225240397" duration="8161000" />
+      <workItem from="1639416085991" duration="3622000" />
     </task>
     <servers />
   </component>
