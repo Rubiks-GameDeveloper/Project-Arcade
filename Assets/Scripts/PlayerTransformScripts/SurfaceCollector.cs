@@ -24,8 +24,6 @@ public class SurfaceCollector : MonoBehaviour
                 }
             }
         }
-        
-        Debug.Log(collision.contacts[0].ToString());
     }
 
     private void Update()
