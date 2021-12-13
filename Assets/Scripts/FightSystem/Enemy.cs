@@ -4,9 +4,30 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Enemy : MonoBehaviour
 {
+    
     public int enemyHealth;
     public int enemyArmor;
-
+    private float _nextAttackTime;
+    [SerializeField] private float attackSpeed;
+    [SerializeField] private float enemyDamage;
+    
+    [Header("Values for patrol")]
+    [SerializeField] private Transform patrolPoint;
+    [SerializeField] private float patrolRange;
+    [SerializeField] private float patrolSpeed;
+    
+    [SerializeField] private float enemyFollowingSpeed;
+    [SerializeField] private float attackRange;
+    
+    [SerializeField] private Transform interactionPoint;
+    
+    public bool isSquirrelAngry;
+    
+    public float playerDistanceToEnemy(Transform enemy, Transform player)
+    {
+        Vector2 distance = player.position - enemy.position;
+        return (float)Math.Sqrt(Math.Pow(distance.x, 2) + Math.Pow(distance.y, 2));
+    }
     public void DamageTaking(float damage, Animator animator)
     {
         enemyHealth += (int)(enemyArmor * 0.3f);
@@ -20,7 +41,32 @@ public class Enemy : MonoBehaviour
         enemyHealth -= (int)damage;
         EnemyDie(gameObject);
     }
-
+    private void EnemyPlayerFollowing(Transform player)
+    {
+        if (!isSquirrelAngry) StopAllCoroutines();
+        Vector3 startPos = transform.position;
+        Vector3 endPos = new Vector3(player.position.x, startPos.y);
+        transform.position = Vector3.Lerp(startPos, endPos, enemyFollowingSpeed * 0.12f);
+        isSquirrelAngry = true;
+    }
+    public void EnemyPlayerReaction(float distance, float reactionRange, Collider2D playerInRange, Transform player)
+    {
+        if (distance <= attackRange) 
+             Attack(playerInRange);
+        else if (distance <= reactionRange && distance > attackRange) 
+             EnemyPlayerFollowing(player.transform);
+        else if (distance > reactionRange && isSquirrelAngry)
+            StartCoroutine(EnemyPatrolRight());
+    }
+    private void Attack(Collider2D player)
+    {
+        isSquirrelAngry = true;
+        if (Time.time >= _nextAttackTime)
+        {
+            player.GetComponent<ProgrammingPlayerFightSystem>().PlayerDamageTaking(enemyDamage);
+            _nextAttackTime = Time.time + 1f / attackSpeed;
+        }
+    }
     private IEnumerator EnemyColorChanging()
     {
         var color = GetComponent<SpriteRenderer>().color;
@@ -49,8 +95,9 @@ public class Enemy : MonoBehaviour
             print("Enemy die");
         }
     }
-    public IEnumerator EnemyPatrolRight(Transform patrolPoint, float patrolRange, float patrolSpeed)
+    public IEnumerator EnemyPatrolRight()
     {
+        isSquirrelAngry = false;
         Vector3 patrolEdgeRight = patrolPoint.position;
         patrolEdgeRight += new Vector3(patrolRange, 0, 0);
         patrolEdgeRight.y = 0;
@@ -60,10 +107,11 @@ public class Enemy : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(1.5f);
-        StartCoroutine(EnemyPatrolLeft(patrolPoint, patrolRange, patrolSpeed));
+        StartCoroutine(EnemyPatrolLeft());
     }
-    private IEnumerator EnemyPatrolLeft(Transform patrolPoint, float patrolRange, float patrolSpeed)
+    private IEnumerator EnemyPatrolLeft()
     {
+        isSquirrelAngry = false;
         Vector3 patrolEdgeLeft = patrolPoint.position;
         patrolEdgeLeft -= new Vector3(patrolRange, 0, 0);
         patrolEdgeLeft.y = 0;
@@ -73,6 +121,10 @@ public class Enemy : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(1.5f);
-        StartCoroutine(EnemyPatrolRight(patrolPoint, patrolRange, patrolSpeed));
+        StartCoroutine(EnemyPatrolRight());
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(interactionPoint.position, attackRange);
     }
 }
