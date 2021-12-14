@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2892211894498016102}
   - component: {fileID: 2892211894498016101}
   - component: {fileID: 2892211894498016100}
-  - component: {fileID: 573817714}
   - component: {fileID: 573817715}
+  - component: {fileID: 573817714}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -111,6 +111,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &573817715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2892211894498016099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6428442b8a8070943a6879b0923c62cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reactionPoint: {fileID: 0}
+  reactionRange: 0
+  playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &573817714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,15 +142,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyHealth: 20
   enemyArmor: 0
---- !u!114 &573817715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2892211894498016099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6428442b8a8070943a6879b0923c62cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  attackSpeed: 0
+  enemyDamage: 0
+  patrolPoint: {fileID: 0}
+  patrolRange: 0
+  patrolSpeed: 0
+  enemyFollowingSpeed: 0
+  attackRange: 0
+  interactionPoint: {fileID: 0}
+  isSquirrelAngry: 0

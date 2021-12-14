@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerProgrammingTransformer : MonoBehaviour
 {
-    [SerializeField] private Joystick playerJoystick;
+    public Joystick playerJoystick;
     [SerializeField] private PrototypeJump jump;
     [SerializeField] private VectorMovement playerMove;
     
@@ -41,12 +41,11 @@ public class PlayerProgrammingTransformer : MonoBehaviour
         Collider2D[] colliders = new Collider2D[25];
         var size = new Vector2(groundCheckerRange, 0.2f);
         var res = Physics2D.OverlapBoxNonAlloc(groundChecker.position, size, 0, colliders);
-        
         if (res > 1)
         {
             foreach (var item in colliders)
             {
-                if (item.gameObject.CompareTag("Ground") && item != null)
+                if (item.gameObject.tag == "Ground" && item != null)
                 {
                     _playerAnimator.SetBool("Grounded", true);
                     return;
@@ -70,7 +69,6 @@ public class PlayerProgrammingTransformer : MonoBehaviour
         PlayerMovement();
         if (Input.GetButtonDown("Jump")) Jump();
     }
-
     private void OnDrawGizmos()
     {
         var size = new Vector2(groundCheckerRange, 0.2f);
