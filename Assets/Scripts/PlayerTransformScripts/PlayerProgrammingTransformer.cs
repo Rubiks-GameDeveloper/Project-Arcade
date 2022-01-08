@@ -14,9 +14,13 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     [SerializeField] private Transform groundChecker;
     private Animator _playerAnimator;
 
+    [SerializeField] private VectorValue pos; //A
+
     private void Start()
     {
         _playerAnimator = GetComponent<Animator>();
+
+        transform.position = pos.initialValue;
     }
 
     private void PlayerMovement()
