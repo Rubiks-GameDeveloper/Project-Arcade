@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     private float _nextAttackTime;
     [SerializeField] private float attackSpeed;
     [SerializeField] private float enemyDamage;
+    [SerializeField] private float attackTime;
     
     [Header("Values for patrol")]
     [SerializeField] private Transform patrolPoint;
@@ -21,8 +22,10 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float attackRange;
     [SerializeField] private float pushingForce;
     [SerializeField] private Transform interactionPoint;
+    [SerializeField] private float stunTime;
     
-    public bool isSquirrelAngry;
+    public bool isEnemyAngry;
+    private bool _isEnemyStun;
     public float playerDistanceToEnemy(Transform enemy, Transform player)
     {
         Vector2 distance = player.position - enemy.position;
@@ -34,34 +37,48 @@ public class Enemy : MonoBehaviour
         enemyHealth -= (int)damage;
         animator.SetTrigger("DamageTaking");
         EnemyDie(animator.gameObject, animator);
+        StartCoroutine(EnemyStunning());
     }
     public void DamageTaking(float damage)
     {
         StartCoroutine(EnemyColorChanging());
         enemyHealth -= (int)damage;
         EnemyDie(gameObject);
+        //StopAllCoroutines();
+        //StartCoroutine(EnemyStunning());
+    }
+
+    private IEnumerator EnemyStunning()
+    {
+        _isEnemyStun = true;
+        yield return new WaitForSeconds(stunTime);
+        _isEnemyStun = false;
     }
     private void PlayerFollowing(Transform player)
     {
-        if (!isSquirrelAngry) StopAllCoroutines();
+        if (!isEnemyAngry) StopAllCoroutines();
         Vector3 startPos = transform.position;
         Vector3 endPos = new Vector3(player.position.x, startPos.y);
         transform.position = Vector3.MoveTowards(startPos, endPos, enemyFollowingSpeed * 0.2f);
-        isSquirrelAngry = true;
+        isEnemyAngry = true;
     }
-    public void EnemyPlayerReaction(float distance, float reactionRange, Collider2D playerInRange, Transform player)
+    public void EnemyReacting(float distance, float reactionRange, Collider2D playerInRange, Transform player)
     {
-        if (distance <= attackRange) 
-             Attack(playerInRange);
-        else if (distance <= reactionRange && distance > attackRange) 
-             PlayerFollowing(player.transform);
-        else if (distance > reactionRange && isSquirrelAngry)
-            StartCoroutine(EnemyPatrolRight());
+        if (Time.time >= _nextAttackTime && !_isEnemyStun)
+        {
+            if (distance <= attackRange && playerInRange != null) 
+                StartCoroutine(Attack(playerInRange));
+            else if (distance <= reactionRange && distance > attackRange) 
+                PlayerFollowing(player.transform);
+            else if (distance > reactionRange && isEnemyAngry)
+                StartCoroutine(EnemyPatrolRight());
+        }
     }
-    private void Attack(Collider2D player)
+    private IEnumerator Attack(Collider2D player)
     {
-        isSquirrelAngry = true;
-        if (Time.time >= _nextAttackTime)
+        isEnemyAngry = true;
+        yield return new WaitForSeconds(attackTime);
+        if (Time.time >= _nextAttackTime && playerDistanceToEnemy(transform, player.transform) <= attackRange)
         {
             player.GetComponent<ProgrammingPlayerFightSystem>().PlayerDamageTaking(enemyDamage);
             PlayerProgrammingTransformer pl = player.GetComponent<PlayerProgrammingTransformer>();
@@ -74,13 +91,17 @@ public class Enemy : MonoBehaviour
     {
         obj.GetComponent<Rigidbody2D>().AddForce(direction.normalized * powerForce, ForceMode2D.Impulse);
     }
+    //
     private IEnumerator EnemyColorChanging()
     {
         var color = GetComponent<SpriteRenderer>().color;
         GetComponent<SpriteRenderer>().color = Color.red;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.15f);
         GetComponent<SpriteRenderer>().color = color;
+        StopAllCoroutines();
+        StartCoroutine(EnemyStunning());
     }
+    //
     private void EnemyDie(GameObject enemy)
     {
         if (enemyHealth <= 0)
@@ -104,7 +125,7 @@ public class Enemy : MonoBehaviour
     }
     public IEnumerator EnemyPatrolRight()
     {
-        isSquirrelAngry = false;
+        isEnemyAngry = false;
         Vector3 patrolEdgeRight = patrolPoint.position;
         patrolEdgeRight += new Vector3(patrolRange, 0, 0);
         patrolEdgeRight.y = 0;
@@ -118,7 +139,7 @@ public class Enemy : MonoBehaviour
     }
     private IEnumerator EnemyPatrolLeft()
     {
-        isSquirrelAngry = false;
+        isEnemyAngry = false;
         Vector3 patrolEdgeLeft = patrolPoint.position;
         patrolEdgeLeft -= new Vector3(patrolRange, 0, 0);
         patrolEdgeLeft.y = 0;

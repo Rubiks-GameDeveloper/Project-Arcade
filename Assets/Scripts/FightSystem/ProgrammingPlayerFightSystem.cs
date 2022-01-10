@@ -6,9 +6,12 @@ using UnityEngine.UI;
 
 public class ProgrammingPlayerFightSystem : MonoBehaviour
 {
+    [SerializeField] private float hurtAnimationLength;
+    
     [SerializeField] private float playerDamage;
     [SerializeField] private float attackRange;
     [SerializeField] private float playerAttackSpeed;
+    [SerializeField] private float playerAttackTime;
     private float _nextAttackTime;
     [SerializeField] private GameObject attackPoint;
     [SerializeField] private LayerMask enemyLayer;
@@ -16,6 +19,9 @@ public class ProgrammingPlayerFightSystem : MonoBehaviour
     private float _currentPlayerHealth;
     
     private Animator _playerAnimator;
+
+    public bool isPlayerAttack;
+    public bool isPlayerStun;
 
     [SerializeField] private Image healthBar;
     [SerializeField] private GameObject dieScreen;
@@ -27,8 +33,9 @@ public class ProgrammingPlayerFightSystem : MonoBehaviour
     }
     public void PlayerAttack()
     {
-        if (Time.time >= _nextAttackTime)
+        if (Time.time >= _nextAttackTime && !isPlayerStun)
         {
+            StartCoroutine(PlayerDontMove());
             _playerAnimator.SetTrigger("Attack1");
             Collider2D[] enemy = new Collider2D[20];
             Physics2D.OverlapCircleNonAlloc(attackPoint.transform.position, attackRange, enemy, enemyLayer.value);
@@ -54,7 +61,15 @@ public class ProgrammingPlayerFightSystem : MonoBehaviour
         else
         {
             _playerAnimator.SetTrigger("Hurt");
+            StartCoroutine(PlayerStunning());
         }
+    }
+
+    private IEnumerator PlayerStunning()
+    {
+        isPlayerStun = true;
+        yield return new WaitForSeconds(hurtAnimationLength);
+        isPlayerStun = false;
     }
     public void Death()
     {
@@ -62,11 +77,18 @@ public class ProgrammingPlayerFightSystem : MonoBehaviour
         GetComponent<ProgrammingPlayerFightSystem>().enabled = false;
         GetComponent<Rigidbody2D>().Sleep();
         _playerAnimator.enabled = false;
+        Time.timeScale = 0;
         dieScreen.SetActive(true);
     }
     private void HealthBarUpdate(Image healthBar)
     {
         healthBar.fillAmount = 1f / maxPlayerHealth * _currentPlayerHealth;
+    }
+    private IEnumerator PlayerDontMove()
+    {
+        isPlayerAttack = true;
+        yield return new WaitForSeconds(playerAttackTime);
+        isPlayerAttack = false;
     }
     private void OnDrawGizmosSelected()
     {

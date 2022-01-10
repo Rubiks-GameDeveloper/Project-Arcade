@@ -23,7 +23,11 @@ public class SuperSquirrel : MonoBehaviour
         if (playerInRange != null)
         {
             var distance = _sSqirrel.playerDistanceToEnemy(transform, playerInRange.transform);
-            _sSqirrel.EnemyPlayerReaction(distance, reactionRange, playerInRange, player);
+            _sSqirrel.EnemyReacting(distance, reactionRange, playerInRange, player);
+        }
+        else
+        {
+            _sSqirrel.EnemyReacting(reactionRange + 2f, reactionRange, playerInRange, player);
         }
     }
     private void OnDrawGizmos()

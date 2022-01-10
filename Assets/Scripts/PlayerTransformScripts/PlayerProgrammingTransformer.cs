@@ -13,15 +13,16 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     
     [SerializeField] private Transform groundChecker;
     private Animator _playerAnimator;
-
+    private ProgrammingPlayerFightSystem _playerFightSystem;
     private void Start()
     {
         _playerAnimator = GetComponent<Animator>();
+        _playerFightSystem = GetComponent<ProgrammingPlayerFightSystem>();
     }
 
     private void PlayerMovement()
     {
-        if (playerJoystick.Horizontal != 0)
+        if (playerJoystick.Horizontal != 0 && !_playerFightSystem.isPlayerAttack && !_playerFightSystem.isPlayerStun)
         {
             _playerAnimator.SetBool("Run", true);
             playerMove.Move(new Vector2(playerJoystick.Horizontal, 0));
@@ -34,7 +35,7 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     }
     public void Jump()
     {
-        jump.PlayerJump(_playerAnimator);
+        if (!_playerFightSystem.isPlayerStun || !_playerFightSystem.isPlayerAttack) jump.PlayerJump(_playerAnimator);
     }
     private void GroundChecker()
     {
