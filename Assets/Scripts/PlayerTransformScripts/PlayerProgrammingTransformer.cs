@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using FightSystem;
+using UIScripts;
 using UnityEngine;
 
 public class PlayerProgrammingTransformer : MonoBehaviour
@@ -16,6 +18,7 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     private ProgrammingPlayerFightSystem _playerFightSystem;
     private void Start()
     {
+        Application.targetFrameRate = OptionMenu.TargetFrameRate;
         _playerAnimator = GetComponent<Animator>();
         _playerFightSystem = GetComponent<ProgrammingPlayerFightSystem>();
     }
@@ -46,7 +49,7 @@ public class PlayerProgrammingTransformer : MonoBehaviour
         {
             foreach (var item in colliders)
             {
-                if (item.gameObject.tag == "Ground" && item != null)
+                if (item != null && item.gameObject.CompareTag("Ground"))
                 {
                     _playerAnimator.SetBool("Grounded", true);
                     return;

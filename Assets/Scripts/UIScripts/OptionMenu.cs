@@ -1,25 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.Audio;
 
-public class OptionMenu : MonoBehaviour
+namespace UIScripts
 {
-    [SerializeField] private AudioMixer audioMixer;
-
-    public void SetVolume(float volume)
+    public class OptionMenu : MonoBehaviour
     {
-        audioMixer.SetFloat("volume", Mathf.Log10(volume) * 20);
-    }
+        [SerializeField] private AudioMixer audioMixer;
 
-    public void SetQuality(int qualityIndex)
-    {
-        QualitySettings.SetQualityLevel(qualityIndex);
-    }
+        public static int TargetFrameRate = 60;
+        private void Awake()
+        {
+            Application.targetFrameRate = 60;
+        }
 
-    public void Sound()
-    {
-        AudioListener.pause = !AudioListener.pause;
-    }
+        public void SetVolume(float volume)
+        {
+            audioMixer.SetFloat("volume", Mathf.Log10(volume) * 20);
+        }
 
+        public void SetQuality(int qualityIndex)
+        {
+            QualitySettings.SetQualityLevel(qualityIndex);
+        }
+
+        public void Sound()
+        {
+            AudioListener.pause = !AudioListener.pause;
+        }
+
+        public void FPSIncrease()
+        {
+            if (Application.targetFrameRate == 60)
+            {
+                TargetFrameRate = 90;
+                Application.targetFrameRate = 90;
+            }
+            else
+            {
+                TargetFrameRate = 60;
+                Application.targetFrameRate = 60;
+            }
+        }
+    }
 }
