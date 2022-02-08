@@ -16,13 +16,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float patrolRange;
     [SerializeField] private float patrolSpeed;
     
+    [Header("Values for reacting on events")]
     [SerializeField] private float enemyFollowingSpeed;
     [SerializeField] private float attackRange;
-    
+    [SerializeField] private float pushingForce;
     [SerializeField] private Transform interactionPoint;
     
     public bool isSquirrelAngry;
-    
     public float playerDistanceToEnemy(Transform enemy, Transform player)
     {
         Vector2 distance = player.position - enemy.position;
@@ -41,12 +41,12 @@ public class Enemy : MonoBehaviour
         enemyHealth -= (int)damage;
         EnemyDie(gameObject);
     }
-    private void EnemyPlayerFollowing(Transform player)
+    private void PlayerFollowing(Transform player)
     {
         if (!isSquirrelAngry) StopAllCoroutines();
         Vector3 startPos = transform.position;
         Vector3 endPos = new Vector3(player.position.x, startPos.y);
-        transform.position = Vector3.Lerp(startPos, endPos, enemyFollowingSpeed * 0.12f);
+        transform.position = Vector3.MoveTowards(startPos, endPos, enemyFollowingSpeed * 0.2f);
         isSquirrelAngry = true;
     }
     public void EnemyPlayerReaction(float distance, float reactionRange, Collider2D playerInRange, Transform player)
@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour
         if (distance <= attackRange) 
              Attack(playerInRange);
         else if (distance <= reactionRange && distance > attackRange) 
-             EnemyPlayerFollowing(player.transform);
+             PlayerFollowing(player.transform);
         else if (distance > reactionRange && isSquirrelAngry)
             StartCoroutine(EnemyPatrolRight());
     }
@@ -64,8 +64,15 @@ public class Enemy : MonoBehaviour
         if (Time.time >= _nextAttackTime)
         {
             player.GetComponent<ProgrammingPlayerFightSystem>().PlayerDamageTaking(enemyDamage);
+            PlayerProgrammingTransformer pl = player.GetComponent<PlayerProgrammingTransformer>();
+            Vector2 direction = new Vector2(-pl.playerJoystick.horizontalConst, 0);
+            ObjectPushing(player.transform, pushingForce, player.GetComponent<SurfaceCollector>().Projection(direction.normalized));
             _nextAttackTime = Time.time + 1f / attackSpeed;
         }
+    }
+    private void ObjectPushing(Transform obj, float powerForce, Vector2 direction)
+    {
+        obj.GetComponent<Rigidbody2D>().AddForce(direction.normalized * powerForce, ForceMode2D.Impulse);
     }
     private IEnumerator EnemyColorChanging()
     {
@@ -103,7 +110,7 @@ public class Enemy : MonoBehaviour
         patrolEdgeRight.y = 0;
         while (transform.position.x < patrolPoint.position.x + patrolRange)
         {
-            transform.position += Vector3.Lerp(Vector3.zero, patrolEdgeRight, patrolSpeed * 0.04f);
+            transform.position += Vector3.MoveTowards(Vector3.zero, patrolEdgeRight, patrolSpeed * 0.04f);
             yield return null;
         }
         yield return new WaitForSeconds(1.5f);
@@ -117,7 +124,7 @@ public class Enemy : MonoBehaviour
         patrolEdgeLeft.y = 0;
         while (transform.position.x > patrolPoint.position.x - patrolRange)
         {
-            transform.position -= Vector3.Lerp(Vector3.zero, patrolEdgeLeft, patrolSpeed * 0.04f);
+            transform.position -= Vector3.MoveTowards(Vector3.zero, patrolEdgeLeft, patrolSpeed * 0.04f);
             yield return null;
         }
         yield return new WaitForSeconds(1.5f);

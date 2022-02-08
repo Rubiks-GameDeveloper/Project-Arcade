@@ -60,6 +60,7 @@ public class ProgrammingPlayerFightSystem : MonoBehaviour
     {
         GetComponent<PlayerProgrammingTransformer>().enabled = false;
         GetComponent<ProgrammingPlayerFightSystem>().enabled = false;
+        GetComponent<Rigidbody2D>().Sleep();
         _playerAnimator.enabled = false;
         dieScreen.SetActive(true);
     }
