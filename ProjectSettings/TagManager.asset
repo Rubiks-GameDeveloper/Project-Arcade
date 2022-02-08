@@ -7,8 +7,7 @@ TagManager:
   - Enemy
   - Ground
   - Wall
-  - 1Portal
-  - 2Portal
+  - EnemyReactionTrigger
   layers:
   - Default
   - TransparentFX
