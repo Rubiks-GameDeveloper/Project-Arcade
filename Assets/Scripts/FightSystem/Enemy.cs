@@ -67,6 +67,7 @@ namespace FightSystem
         
         public IEnumerator DamageTaking(float damage)
         {
+            _animator.SetTrigger("Hurt");
             if (!_isEnemyInAccessible && transform.rotation.y == 0)
             {
                 StopCoroutine(_enemyDataCoroutine);
@@ -86,7 +87,6 @@ namespace FightSystem
             StartCoroutine(EnemyDie(gameObject));
             yield return null;
             //StopAllCoroutines();
-            //StartCoroutine(EnemyStunning());
         }
 
         private void StartPatrol()
@@ -123,56 +123,16 @@ namespace FightSystem
                 {
                     if (dataEnemy != null && dataEnemy.CompareTag("Player"))
                     {
-                        dataEnemy.GetComponent<ProgrammingPlayerFightSystem>().PlayerDamageTaking(enemyDamage);
+                        if (!dataEnemy.GetComponent<ProgrammingPlayerFightSystem>().isPlayerBlock)
+                        {
+                            dataEnemy.GetComponent<ProgrammingPlayerFightSystem>().PlayerDamageTaking(enemyDamage);
+                        }
                     }
                 }
                 _nextAttackTime = Time.time + 1f / attackSpeed;
             }
             _isEnemyAttack = false;
         }
-
-        /*
-        private IEnumerator AttackPrepare(Collider2D player)
-        {
-            var position = transform.position;
-            
-            var playerPos = new Vector3(player.transform.position.x, position.y, 0);
-            var enemyPos = new Vector3(position.x, position.y, 0);
-            
-            var distance = playerDistanceToEnemy(enemyPos, playerPos);
-            
-            _animator.SetInteger("AnimState", 1);
-
-            if (distance <= attackRange + 0.01f)
-            {
-                if (!_isEnemyAttack)
-                {
-                    _animator.SetTrigger("Attack");
-                    yield return new WaitForSeconds(attackTime);
-                    _isEnemyAttack = true;
-                }
-
-                if (Time.time >= _nextAttackTime && distance <= attackRange + 0.01f && _isEnemyAttack)
-                {
-                    
-                    if (!_isEnemyAttack)
-                    {
-                        _animator.SetTrigger("Attack");
-                        yield return new WaitForSeconds(attackTime);
-                        _isEnemyAttack = true;
-                        _nextAttackTime = Time.time + 1f / attackSpeed;
-                    }
-                    player.GetComponent<ProgrammingPlayerFightSystem>().PlayerDamageTaking(enemyDamage);
-
-                    _isEnemyAttack = false;
-                    //PlayerProgrammingTransformer pl = player.GetComponent<PlayerProgrammingTransformer>();
-                    //Vector2 direction = new Vector2(-pl.playerJoystick.horizontalConst, 0);
-                    //ObjectPushing(player.transform, pushingForce, player.GetComponent<SurfaceCollector>().Projection(direction.normalized));
-                    //_nextAttackTime = Time.time + 1f / attackSpeed;
-                    print(_nextAttackTime);
-                }
-            }
-        }*/
         
         //Need fixing!!!!!!
         private void ObjectPushing(Transform obj, float powerForce, Vector2 direction)
@@ -198,7 +158,6 @@ namespace FightSystem
                 enemy.SetActive(false);
                 print("Enemy die");
             }
-            print("tested");
             yield return null;
         }
         private void EnemyDie(GameObject enemy, Animator animator)

@@ -155,7 +155,7 @@ MonoBehaviour:
   attackRange: 1.4
   pushingForce: 6.5
   interactionPoint: {fileID: 3612142531537154812}
-  stunTime: 0
+  stunTime: 0.6
   isEnemyAngry: 0
 --- !u!95 &3612142533190070333
 Animator:

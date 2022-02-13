@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace FightSystem
@@ -25,6 +26,8 @@ namespace FightSystem
 
         [SerializeField] private Image healthBar;
         [SerializeField] private GameObject dieScreen;
+
+        public bool isPlayerBlock;
         private void Start()
         {
             _currentPlayerHealth = maxPlayerHealth;
@@ -69,12 +72,25 @@ namespace FightSystem
                 StartCoroutine(PlayerStunning());
             }
         }
-
         private IEnumerator PlayerStunning()
         {
             isPlayerStun = true;
             yield return new WaitForSeconds(hurtAnimationLength);
             isPlayerStun = false;
+        }
+
+        public void PlayerBlock()
+        {
+            if (!isPlayerBlock)
+            {
+                isPlayerBlock = true;
+                _playerAnimator.SetInteger("State", 1);
+            }
+            else
+            {
+                isPlayerBlock = false;
+                _playerAnimator.SetInteger("State", 0);
+            }
         }
         public void Death()
         {
