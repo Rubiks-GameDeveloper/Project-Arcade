@@ -7,6 +7,7 @@ public class PrototypeJump : MonoBehaviour
     [SerializeField] private AnimationCurve _YAnimation;
 
     [SerializeField] private float timeDuration = 1;
+    [SerializeField] private float jumpForce;
     [SerializeField] private float height = 1;
 
     private Rigidbody2D _rb;
@@ -17,23 +18,23 @@ public class PrototypeJump : MonoBehaviour
     {
         _rb = gameObject.GetComponent<Rigidbody2D>();
     }
-    private void PlayAnimation(Transform jumper, float duration)
+    private void PlayAnimation(Transform jumper, float duration, Animator animator)
     {
-        
         if (jumpCount == 2)
         {
             jumpCount -= 1;
-            _currentJump = StartCoroutine(AnimationPlaying(jumper, duration));
+            _currentJump = StartCoroutine(AnimationPlaying(jumper, duration, animator));
         }
         else if (jumpCount == 1)
         {
             jumpCount -= 1;
-            StopCoroutine(_currentJump);
-            StartCoroutine(AnimationPlaying(jumper, duration));
+            //StopCoroutine(_currentJump);
+            StartCoroutine(AnimationPlaying(jumper, duration, animator));
         }
     }
-    private IEnumerator AnimationPlaying(Transform jumper, float jumpDuration)
+    private IEnumerator AnimationPlaying(Transform jumper, float jumpDuration, Animator animator)
     {
+        animator.SetTrigger("Jump");
         float expiredTime = 0;
         float progress = 0;
 
@@ -53,9 +54,13 @@ public class PrototypeJump : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
         _rb.gravityScale = 1;
     }
+    private IEnumerator AnimationPlaying(Rigidbody2D jumper, float jumpForce)
+    {
+        jumper.AddForce(new Vector2(0, 1 + jumpForce), ForceMode2D.Impulse);
+        yield return null;
+    }
     public void PlayerJump(Animator animator)
     {
-        animator.SetTrigger("Jump");
-        PlayAnimation(transform, timeDuration);
+        PlayAnimation(transform, timeDuration, animator);
     }
 }

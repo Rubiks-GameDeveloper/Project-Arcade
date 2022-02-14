@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace FightSystem
@@ -16,7 +17,7 @@ namespace FightSystem
         [SerializeField] private GameObject attackPoint;
         [SerializeField] private LayerMask enemyLayer;
         public float maxPlayerHealth;
-        private float _currentPlayerHealth;
+        public float currentPlayerHealth;
     
         private Animator _playerAnimator;
 
@@ -25,9 +26,11 @@ namespace FightSystem
 
         [SerializeField] private Image healthBar;
         [SerializeField] private GameObject dieScreen;
+
+        public bool isPlayerBlock;
         private void Start()
         {
-            _currentPlayerHealth = maxPlayerHealth;
+            currentPlayerHealth = maxPlayerHealth;
             _playerAnimator = GetComponent<Animator>();
             HealthBarUpdate(healthBar);
         }
@@ -52,13 +55,13 @@ namespace FightSystem
         }
         public void PlayerDamageTaking(float damage)
         {
-            if (maxPlayerHealth > 0) _currentPlayerHealth -= damage;
+            if (maxPlayerHealth > 0) currentPlayerHealth -= damage;
             HealthBarUpdate(healthBar);
             PlayerDeathAnimation();
         }
         private void PlayerDeathAnimation()
         {
-            if (_currentPlayerHealth <= 0)
+            if (currentPlayerHealth <= 0)
             {
                 dieScreen.SetActive(true);
                 _playerAnimator.SetBool("Death", true);
@@ -69,12 +72,25 @@ namespace FightSystem
                 StartCoroutine(PlayerStunning());
             }
         }
-
         private IEnumerator PlayerStunning()
         {
             isPlayerStun = true;
             yield return new WaitForSeconds(hurtAnimationLength);
             isPlayerStun = false;
+        }
+
+        public void PlayerBlock()
+        {
+            if (!isPlayerBlock)
+            {
+                isPlayerBlock = true;
+                _playerAnimator.SetInteger("State", 1);
+            }
+            else
+            {
+                isPlayerBlock = false;
+                _playerAnimator.SetInteger("State", 0);
+            }
         }
         public void Death()
         {
@@ -86,7 +102,7 @@ namespace FightSystem
         }
         private void HealthBarUpdate(Image healthBar)
         {
-            healthBar.fillAmount = 1f / maxPlayerHealth * _currentPlayerHealth;
+            healthBar.fillAmount = 1f / maxPlayerHealth * currentPlayerHealth;
         }
         private IEnumerator PlayerDontMove()
         {
