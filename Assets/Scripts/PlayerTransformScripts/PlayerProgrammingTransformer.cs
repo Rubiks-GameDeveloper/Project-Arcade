@@ -58,7 +58,7 @@ public class PlayerProgrammingTransformer : MonoBehaviour
         }
         _playerAnimator.SetBool("Grounded", false);
     }
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionEnter2D(Collision2D other) 
     {
         if (other.gameObject.CompareTag("Ground"))
         {
@@ -66,7 +66,23 @@ public class PlayerProgrammingTransformer : MonoBehaviour
             _playerAnimator.SetBool("Grounded", true);
             //_onGround = true;
         }
+        
+        if (other.gameObject.name.Equals("MovingPlatform")) //Ani
+        {
+            this.transform.parent = other.transform;
+        }
     }
+    
+    
+    
+    private void OnCollisionExit2D(Collision2D collision) //Ani
+    {
+        if (collision.gameObject.name.Equals("MovingPlatform"))
+        {
+            this.transform.parent = null;
+        }
+    }
+    
     private void FixedUpdate()
     {
         GroundChecker();
@@ -78,4 +94,6 @@ public class PlayerProgrammingTransformer : MonoBehaviour
         var size = new Vector2(groundCheckerRange, 0.2f);
         Gizmos.DrawWireCube(groundChecker.position, size);
     }
+
+    
 }

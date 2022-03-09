@@ -9,12 +9,18 @@ namespace TrapsScripts
         [SerializeField] private float spikesDamage;
         private void OnTriggerEnter2D(Collider2D col)
         {
-            StartCoroutine(CreatureDie(col.gameObject));
+            if (col.CompareTag("Player"))
+            {
+                StartCoroutine(CreatureDie(col.gameObject));
+            }
         }
 
-        private void OnTriggerExit2D(Collider2D other)
+        private void OnTriggerExit2D(Collider2D col)
         {
-            StopAllCoroutines();
+            if (col.CompareTag("Player"))
+            {
+                StopAllCoroutines();
+            }
         }
 
         private IEnumerator CreatureDie(GameObject creature)
