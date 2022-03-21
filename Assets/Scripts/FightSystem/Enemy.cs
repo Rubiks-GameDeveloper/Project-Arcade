@@ -31,7 +31,7 @@ namespace FightSystem
         [Header("Values for reacting on events")]
         [Range(0.01f, 2.5f)] public float enemyFollowingSpeed; 
         public float attackRange;
-        [SerializeField] private float pushingForce;
+        public float pushingForce;
         [SerializeField] private Transform interactionPoint;
         public float stunTime;
 
@@ -127,7 +127,7 @@ namespace FightSystem
         }
         
         //Need fixing?
-        private void ObjectPushing(Transform obj, float powerForce, Vector2 direction)
+        private void ObjectPushing(Transform obj, float powerForce)
         {
             if (transform.rotation.y == 0)
             {

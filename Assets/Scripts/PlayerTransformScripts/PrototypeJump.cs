@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PrototypeJump : MonoBehaviour
@@ -16,28 +14,30 @@ public class PrototypeJump : MonoBehaviour
     public Vector3 jumpPosition;
 
     public int jumpCount = 2;
+    private static readonly int Jump = Animator.StringToHash("Jump");
+
     private void Start()
     {
         _rb = gameObject.GetComponent<Rigidbody2D>();
     }
-    private void PlayAnimation(Transform jumper, float duration, Animator animator)
+    private void PlayAnimation(Animator animator)
     {
         if (jumpCount == 2)
         {
             jumpCount -= 1;
-            StartCoroutine(AnimationPlaying(jumper, duration, animator));
+            StartCoroutine(AnimationPlaying(animator));
         }
         else if (jumpCount == 1)
         {
             jumpCount -= 1;
             StopAllCoroutines();
-            StartCoroutine(AnimationPlaying(jumper, duration, animator));
+            StartCoroutine(AnimationPlaying(animator));
         }
     }
 
-    private IEnumerator AnimationPlaying(Transform jumper, float jumpDuration, Animator animator)
+    private IEnumerator AnimationPlaying(Animator animator)
     {
-        animator.SetTrigger("Jump");
+        animator.SetTrigger(Jump);
         float expiredTime = 0;
         float progress = 0;
 
@@ -59,6 +59,6 @@ public class PrototypeJump : MonoBehaviour
     }
     public void PlayerJump(Animator animator)
     {
-        PlayAnimation(transform, timeDuration, animator);
+        PlayAnimation(animator);
     }
 }

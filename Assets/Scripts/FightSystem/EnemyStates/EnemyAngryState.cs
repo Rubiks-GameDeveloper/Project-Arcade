@@ -17,6 +17,7 @@ namespace FightSystem.EnemyStates
         private float _enemyAngryDistance;
         
         private float _attackRange;
+        private float _pushingForce;
         private float _nextAttackTime;
 
         public EnemyAngryState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)
@@ -31,6 +32,7 @@ namespace FightSystem.EnemyStates
             _followingSpeed = enemy.enemyFollowingSpeed;
             _attackRange = enemy.attackRange;
             _enemyAngryDistance = enemy.enemyAngryDistance;
+            _pushingForce = enemy.pushingForce;
 
             IsEnemyPatrol = false;
             IsEnemyAngry = true;
@@ -77,13 +79,25 @@ namespace FightSystem.EnemyStates
                         if (!isPlayerBlock)
                         {
                             playerFightComponent.PlayerDamageTaking(enemy.enemyDamage);
+                            ObjectPushing(dataEnemy.transform, _pushingForce);
                         }
                     }
                 }
                 _nextAttackTime = Time.time + 1f / enemy.attackSpeed;
             }
         }
-
+        
+        private void ObjectPushing(Transform obj, float powerForce)
+        {
+            if (enemy.transform.rotation.y == 0)
+            {
+                obj.GetComponent<Rigidbody2D>().AddForce(Vector2.left * powerForce, ForceMode2D.Impulse);
+            }
+            else
+            {
+                obj.GetComponent<Rigidbody2D>().AddForce(Vector2.right * powerForce, ForceMode2D.Impulse);
+            }
+        }
         private void DistanceShorten()
         {
             var playerPosition = _player.transform.position;

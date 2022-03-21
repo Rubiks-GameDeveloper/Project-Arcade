@@ -4843,6 +4843,10 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 97434814}
+    - target: {fileID: 7579623012229026746, guid: 513ef13086ea6b146983d61931c66295, type: 3}
+      propertyPath: playerPushingForce
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 513ef13086ea6b146983d61931c66295, type: 3}
 --- !u!1001 &9203173542832608509
