@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using FightSystem;
 using UIScripts;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     
     //private bool _onGround;
     [SerializeField] private float groundCheckerRange;
+    [SerializeField] private float playerSpeed;
     
     [SerializeField] private Transform groundChecker;
     private Animator _playerAnimator;
@@ -30,12 +32,13 @@ public class PlayerProgrammingTransformer : MonoBehaviour
         if (playerJoystick.Horizontal != 0 && playerCanMove)
         {
             _playerAnimator.SetBool("Run", true);
-            playerMove.Move(new Vector2(playerJoystick.Horizontal, 0));
+            playerMove.Move(new Vector2(playerJoystick.Horizontal, 0), playerSpeed, jump.jumpPosition);
             if (playerJoystick.Horizontal < 0)
                 gameObject.transform.rotation = Quaternion.AngleAxis(180f, Vector3.down);
             else if (playerJoystick.Horizontal >= 0)
                 gameObject.transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
         }
+        else if (playerCanMove && jump.jumpPosition != Vector3.zero) playerMove.Move(Vector3.zero, 0, jump.jumpPosition);
         else _playerAnimator.SetBool("Run", false);
     }
     public void Jump()
@@ -56,6 +59,7 @@ public class PlayerProgrammingTransformer : MonoBehaviour
             {
                 if (item != null && item.gameObject.CompareTag("Ground"))
                 {
+                    
                     _playerAnimator.SetBool("Grounded", true);
                     return;
                 }
@@ -65,13 +69,26 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Ground"))
+        if (other.gameObject.CompareTag("Ground") && other.transform.position.y < transform.position.y)
         {
-            jump.jumpCount = 2;
+            StopAllCoroutines();
+            StartCoroutine(JumpCountReceive());
             _playerAnimator.SetBool("Grounded", true);
-            //_onGround = true;
+        }
+        else if (other.gameObject.CompareTag("Ground") && other.transform.position.y >= transform.position.y)
+        {
+            jump.StopAllCoroutines();
+            jump.jumpPosition = Vector3.zero;
+            GetComponent<Rigidbody2D>().gravityScale = 1;
         }
     }
+    private IEnumerator JumpCountReceive()
+    {
+        yield return new WaitForSeconds(0.15f);
+        jump.jumpCount = 2;
+    }
+    
+    
     private void FixedUpdate()
     {
         GroundChecker();

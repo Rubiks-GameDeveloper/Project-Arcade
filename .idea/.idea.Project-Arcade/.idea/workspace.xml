@@ -26,8 +26,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="937acea6-2954-430e-8f2a-53aaaf66f35a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/EnemyStates/EnemyAngryState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/EnemyStates/EnemyAngryState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/EnemyStates/EnemyGroundedState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/EnemyStates/EnemyGroundedState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/EnemyStates/EnemyHurtState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/EnemyStates/EnemyHurtState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/EnemyStates/EnemyPatrolState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/EnemyStates/EnemyPatrolState.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Bandits - Pixel Art/Animations/Heavy Bandit/HeavyBandit_Attack.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Bandits - Pixel Art/Animations/Heavy Bandit/HeavyBandit_Attack.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Bandits - Pixel Art/Animations/Heavy Bandit/HeavyBandit_Death.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Bandits - Pixel Art/Animations/Heavy Bandit/HeavyBandit_Death.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Bandits - Pixel Art/Animations/Heavy Bandit/HeavyBandit_Hurt.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Bandits - Pixel Art/Animations/Heavy Bandit/HeavyBandit_Hurt.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Bandits - Pixel Art/Animations/Light Bandit/LightBandit_AnimController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Bandits - Pixel Art/Animations/Light Bandit/LightBandit_AnimController.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/AnimatingEnemyTest.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/AnimatingEnemyTest.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player 1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player 1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Prototype.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Prototype.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FightSystem/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/Enemy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FightSystem/EnemyReacting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/EnemyReacting.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FightSystem/ProgrammingPlayerFightSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/ProgrammingPlayerFightSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PlayerProgrammingTransformer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PlayerProgrammingTransformer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PrototypeJump.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PrototypeJump.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/VectorMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/VectorMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrapsScripts/FloorMovingTrapSpikes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrapsScripts/FloorMovingTrapSpikes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrapsScripts/Spikes.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrapsScripts/Spikes.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +66,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/DoorsTransformer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../State Machine for Unity Final/Assets/RW/Scripts/StateMachine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/CameraTransform.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/FightSystem/ProgrammingPlayerFightSystem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/FightSystem/SuperSquirrel.cs" root0="FORCE_HIGHLIGHTING" />
@@ -65,6 +93,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="21C8YVYdG5MyzhHceuKEzbuOAGO" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -74,8 +105,9 @@
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="rider.run.widget.enabled.cache" value="false" />
-    <property name="settings.editor.selected.configurable" value="SolutionBuilderGeneralOptionsPageId" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.notifications" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
@@ -141,7 +173,20 @@
       <workItem from="1644171940944" duration="22312000" />
       <workItem from="1644663212827" duration="6250000" />
       <workItem from="1644772682021" duration="4249000" />
-      <workItem from="1644853257841" duration="300000" />
+      <workItem from="1644853257841" duration="4852000" />
+      <workItem from="1645380034200" duration="9694000" />
+      <workItem from="1645449424856" duration="3646000" />
+      <workItem from="1645528113287" duration="3409000" />
+      <workItem from="1645538073935" duration="1382000" />
+      <workItem from="1645552259196" duration="9344000" />
+      <workItem from="1645822431179" duration="2005000" />
+      <workItem from="1645996176543" duration="16203000" />
+      <workItem from="1646844395231" duration="8078000" />
+      <workItem from="1647025660819" duration="1325000" />
+      <workItem from="1647377293089" duration="3568000" />
+      <workItem from="1647612542495" duration="17082000" />
+      <workItem from="1647852779355" duration="1204000" />
+      <workItem from="1647855960207" duration="3151000" />
     </task>
     <servers />
   </component>
@@ -176,5 +221,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

@@ -46,8 +46,7 @@ namespace FightSystem
                 {
                     if (dataEnemy != null && !dataEnemy.CompareTag("EnemyReactionTrigger"))
                     {
-                        StartCoroutine(dataEnemy.GetComponent<Enemy>().DamageTaking(playerDamage));
-                        print(dataEnemy.name);
+                        dataEnemy.GetComponent<Enemy>().DamageTaking(playerDamage);
                     }
                 }
                 _nextAttackTime = Time.time + 1f / playerAttackSpeed;
