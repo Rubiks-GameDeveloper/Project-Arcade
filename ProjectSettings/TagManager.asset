@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - Wall
   - EnemyReactionTrigger
+  - trap
+  - Ladder
   layers:
   - Default
   - TransparentFX
