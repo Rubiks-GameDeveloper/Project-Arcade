@@ -68,19 +68,23 @@ public class PlayerProgrammingTransformer : MonoBehaviour
         }
         _playerAnimator.SetBool(Grounded, false);
     }
-    private void OnCollisionEnter2D(Collision2D other)
+
+    public void JumpStopper(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Ground") && other.transform.position.y < transform.position.y)
-        {
-            StopAllCoroutines();
-            StartCoroutine(JumpCountReceive());
-            _playerAnimator.SetBool(Grounded, true);
-        }
-        else if (other.gameObject.CompareTag("Ground") && other.transform.position.y >= transform.position.y)
+        if (other.gameObject.CompareTag("Ground"))
         {
             jump.StopAllCoroutines();
             jump.jumpPosition = Vector3.zero;
             GetComponent<Rigidbody2D>().gravityScale = 1;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            StopAllCoroutines();
+            StartCoroutine(JumpCountReceive());
+            _playerAnimator.SetBool(Grounded, true);
         }
     }
     private IEnumerator JumpCountReceive()
