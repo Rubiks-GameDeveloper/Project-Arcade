@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class Portal_Ledder : MonoBehaviour
 {
-    [SerializeField] private Transform destination;
+    private Transform destination;
     [SerializeField] private bool isFirst;
     [SerializeField] private float distance = 0.3f;
+    [SerializeField] private GameObject text1;
+    [SerializeField] private GameObject text2;
     void Start()
     {
         if (isFirst == false)
         {
-            destination =  GameObject.Find("1Portal").GetComponent<Transform>();
+            destination =  text1.GetComponent<Transform>();
         }
         else 
         {
-            destination =  GameObject.Find("2Portal").GetComponent<Transform>();
+            destination =  text2.GetComponent<Transform>();
         }
     }
 
