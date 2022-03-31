@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using FightSystem;
 using UIScripts;
@@ -12,10 +11,14 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     
     //private bool _onGround;
     [SerializeField] private float groundCheckerRange;
+    [SerializeField] private float playerSpeed;
     
     [SerializeField] private Transform groundChecker;
     private Animator _playerAnimator;
     private ProgrammingPlayerFightSystem _playerFightSystem;
+    private static readonly int Grounded = Animator.StringToHash("Grounded");
+    private static readonly int Run = Animator.StringToHash("Run");
+
     private void Start()
     {
         Application.targetFrameRate = OptionMenu.TargetFrameRate;
@@ -25,20 +28,26 @@ public class PlayerProgrammingTransformer : MonoBehaviour
 
     private void PlayerMovement()
     {
-        if (playerJoystick.Horizontal != 0 && !_playerFightSystem.isPlayerAttack && !_playerFightSystem.isPlayerStun)
+        var playerCanMove = !_playerFightSystem.isPlayerAttack && !_playerFightSystem.isPlayerStun &&
+                            !_playerFightSystem.isPlayerBlock;
+        if (playerJoystick.Horizontal != 0 && playerCanMove)
         {
-            _playerAnimator.SetBool("Run", true);
-            playerMove.Move(new Vector2(playerJoystick.Horizontal, 0));
+            _playerAnimator.SetBool(Run, true);
+            playerMove.Move(new Vector2(playerJoystick.Horizontal, 0), playerSpeed, jump.jumpPosition);
             if (playerJoystick.Horizontal < 0)
                 gameObject.transform.rotation = Quaternion.AngleAxis(180f, Vector3.down);
             else if (playerJoystick.Horizontal >= 0)
                 gameObject.transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
         }
-        else _playerAnimator.SetBool("Run", false);
+        else if (playerCanMove && jump.jumpPosition != Vector3.zero) playerMove.Move(Vector3.zero, 0, jump.jumpPosition);
+        else _playerAnimator.SetBool(Run, false);
     }
     public void Jump()
     {
-        if (!_playerFightSystem.isPlayerStun || !_playerFightSystem.isPlayerAttack) jump.PlayerJump(_playerAnimator);
+        if (!_playerFightSystem.isPlayerStun || !_playerFightSystem.isPlayerAttack || !_playerFightSystem.isPlayerBlock)
+        {
+            jump.PlayerJump(_playerAnimator);
+        }
     }
     private void GroundChecker()
     {
@@ -51,37 +60,35 @@ public class PlayerProgrammingTransformer : MonoBehaviour
             {
                 if (item != null && item.gameObject.CompareTag("Ground"))
                 {
-                    _playerAnimator.SetBool("Grounded", true);
+                    
+                    _playerAnimator.SetBool(Grounded, true);
                     return;
                 }
             }
         }
-        _playerAnimator.SetBool("Grounded", false);
+        _playerAnimator.SetBool(Grounded, false);
     }
-    private void OnCollisionEnter2D(Collision2D other) 
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Ground"))
+        if (other.gameObject.CompareTag("Ground") && other.transform.position.y < transform.position.y)
         {
-            jump.jumpCount = 2;
-            _playerAnimator.SetBool("Grounded", true);
-            //_onGround = true;
+            StopAllCoroutines();
+            StartCoroutine(JumpCountReceive());
+            _playerAnimator.SetBool(Grounded, true);
         }
-        
-        if (other.gameObject.name.Equals("MovingPlatform")) //Ani
+        else if (other.gameObject.CompareTag("Ground") && other.transform.position.y >= transform.position.y)
         {
-            this.transform.parent = other.transform;
+            jump.StopAllCoroutines();
+            jump.jumpPosition = Vector3.zero;
+            GetComponent<Rigidbody2D>().gravityScale = 1;
         }
     }
-    
-    
-    
-    private void OnCollisionExit2D(Collision2D collision) //Ani
+    private IEnumerator JumpCountReceive()
     {
-        if (collision.gameObject.name.Equals("MovingPlatform"))
-        {
-            this.transform.parent = null;
-        }
+        yield return new WaitForSeconds(0.15f);
+        jump.jumpCount = 2;
     }
+    
     
     private void FixedUpdate()
     {
@@ -94,6 +101,4 @@ public class PlayerProgrammingTransformer : MonoBehaviour
         var size = new Vector2(groundCheckerRange, 0.2f);
         Gizmos.DrawWireCube(groundChecker.position, size);
     }
-
-    
 }

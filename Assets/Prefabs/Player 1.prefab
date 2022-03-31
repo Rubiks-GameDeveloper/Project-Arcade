@@ -15,12 +15,12 @@ GameObject:
   - component: {fileID: 4269230615121365188}
   - component: {fileID: 4269230615121365189}
   - component: {fileID: 4269230615121365186}
-  - component: {fileID: 7579623012229026746}
   - component: {fileID: 4269230615121365187}
   - component: {fileID: 4269230615121365185}
-  m_Layer: 0
+  - component: {fileID: 7579623012229026746}
+  m_Layer: 7
   m_Name: Player 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,7 +109,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 3.125, y: 1.71875}
+    oldSize: {x: 4.1666665, y: 2.2916667}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -155,6 +155,7 @@ MonoBehaviour:
   jump: {fileID: 4269230615121365189}
   playerMove: {fileID: 4269230615121365186}
   groundCheckerRange: 0.45
+  playerSpeed: 8
   groundChecker: {fileID: 4269230616159916651}
 --- !u!114 &4269230615121365189
 MonoBehaviour:
@@ -168,50 +169,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b3ecae5b9e1c7458f104d7b257b84d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _YAnimation:
+  yAnimation:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.044999998
-      value: 0.0011603672
-      inSlope: 19.010588
-      outSlope: 19.010588
+      time: 0.2490995
+      value: 1
+      inSlope: 82.673775
+      outSlope: 82.673775
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.12983279
+      outWeight: 0.088206105
     - serializedVersion: 3
-      time: 0.10410852
-      value: 1.4130571
-      inSlope: -3.9949431
-      outSlope: -3.9949431
+      time: 0.25179228
+      value: 2.007337
+      inSlope: 106.711395
+      outSlope: 106.711395
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.094031185
-      outWeight: 1
-    - serializedVersion: 3
-      time: 0.111523144
-      value: 0.9479601
-      inSlope: -68.6578
-      outSlope: -68.6578
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.2892238
-      outWeight: 0.2552013
-    - serializedVersion: 3
-      time: 0.122725554
-      value: 0
-      inSlope: -3.5643294
-      outSlope: -3.5643294
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.81311315
+      inWeight: 0.17062682
       outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  timeDuration: 0.1
-  height: 0.6
+  timeDuration: 0.3
+  height: 4.3
   jumpCount: 2
 --- !u!114 &4269230615121365186
 MonoBehaviour:
@@ -227,33 +210,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   surfaceCollector: {fileID: 4269230615121365187}
   rb2D: {fileID: 4269230615121365190}
-  speed: 7.5
---- !u!114 &7579623012229026746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4269230615121365242}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8429b5bb7ac252a49b2920b71c16a1fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hurtAnimationLength: 0
-  playerDamage: 5
-  attackRange: 0.39
-  playerAttackSpeed: 1.3
-  playerAttackTime: 0
-  attackPoint: {fileID: 4269230615371660211}
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  maxPlayerHealth: 0
-  isPlayerAttack: 0
-  isPlayerStun: 0
-  healthBar: {fileID: 0}
-  dieScreen: {fileID: 0}
 --- !u!114 &4269230615121365187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +241,34 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7579623012229026746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4269230615121365242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8429b5bb7ac252a49b2920b71c16a1fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hurtAnimationLength: 0.8
+  playerDamage: 5
+  attackRange: 1.2
+  playerAttackSpeed: 1.7
+  playerAttackTime: 0.4
+  attackPoint: {fileID: 4269230615371660211}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  maxPlayerHealth: 40
+  currentPlayerHealth: 0
+  isPlayerAttack: 0
+  isPlayerStun: 0
+  healthBar: {fileID: 0}
+  dieScreen: {fileID: 0}
+  isPlayerBlock: 0
 --- !u!1 &4269230615371660211
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,7 +278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4269230615371660210}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -309,7 +293,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4269230615371660211}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.806, y: 0.893, z: 0}
+  m_LocalPosition: {x: 0.867, y: 0.893, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4269230615121365191}
@@ -324,7 +308,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4269230616159916651}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundChecker
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}

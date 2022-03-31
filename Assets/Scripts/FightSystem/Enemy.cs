@@ -1,5 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using AdditionalMethods;
+using FightSystem.EnemyStates;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -7,137 +10,133 @@ namespace FightSystem
 {
     public class Enemy : MonoBehaviour
     {
+        public Transform groundChecker;
+        public float groundCheckerRange;
     
         public int enemyHealth;
         public int enemyArmor;
         private float _nextAttackTime;
-        [SerializeField] private float attackSpeed;
-        [SerializeField] private float enemyDamage;
-        [SerializeField] private float attackTime;
-    
+        public float attackSpeed;
+        public float enemyDamage;
+        public float enemyAngryDistance;
+
+        public VectorMovement vectorMovement;
+        
         [Header("Values for patrol")]
-        [SerializeField] private Transform patrolPoint;
-        [SerializeField] private float patrolRange;
-        [SerializeField] [Range(0.01f, 1.5f)] private float patrolSpeed;
+        public Transform patrolPoint;
+        public float patrolRange;
+        public float patrolWaitTime;
+        [Range(0.01f, 1.5f)] public float patrolSpeed;
     
         [Header("Values for reacting on events")]
-        [SerializeField] [Range(0.01f, 0.5f)] private float enemyFollowingSpeed;
-        [SerializeField] private float attackRange;
-        [SerializeField] private float pushingForce;
+        [Range(0.01f, 2.5f)] public float enemyFollowingSpeed; 
+        public float attackRange;
+        public float pushingForce;
         [SerializeField] private Transform interactionPoint;
-        [SerializeField] private float stunTime;
+        public float stunTime;
 
-        private Animator _animator; 
-    
-        public bool isEnemyAngry;
-        private bool _isEnemyStun;
+        public float playerDetectionRange;
 
-        private bool _isEnemyInAccessible;
+        public Animator animator;
 
-        private bool _isEnemyAttack;
+        private StateMachine _stateMachine;
+        
+        //All enemy states 
+        private EnemyGroundedState _enemyGroundedState;
+        public EnemyStandingState EnemyStandingState;
+        public EnemyPatrolState EnemyPatrolState;
+        public EnemyAngryState EnemyAngryState;
+        private EnemyHurtState _enemyHurtState;
+        
+        
+        public bool isEnemyStun;
+        public bool isEnemyWait;
+        public bool isEnemyAttack;
+        
+        private State _isEnemyInAccessible;
+        private State _isEnemyAttack;
+
+        public float playerDamage;
 
         private IEnumerator _enemyDataCoroutine;
+
+        private readonly StateMachine _enemyStateMachine = new StateMachine();
+        private static readonly int Death = Animator.StringToHash("Death");
+
         private void Awake()
         {
-            isEnemyAngry = false;
-            _animator = GetComponent<Animator>();
-            GlobalEventManager.enemyAlarm.AddListener(ReactionToAlarm);
-            StartPatrol();
-            StartCoroutine(GlobalCoroutine());
+            _stateMachine = new StateMachine();
+
+            EnemyAngryState = new EnemyAngryState(this, _stateMachine);
+            _enemyHurtState = new EnemyHurtState(this, _stateMachine);
+            _enemyGroundedState = new EnemyGroundedState(this, _stateMachine);
+            EnemyStandingState = new EnemyPatrolState(this, _stateMachine);
+            EnemyPatrolState = new EnemyPatrolState(this, _stateMachine);
+
+            animator = GetComponent<Animator>();
         }
 
-        private float playerDistanceToEnemy(Transform enemy, Transform player)
+        private void Start()
         {
-            Vector2 distance = player.position - enemy.position;
-            return (float)Math.Sqrt(Math.Pow(distance.x, 2) + Math.Pow(distance.y, 2));
+            _stateMachine.Initialize(EnemyStandingState);
         }
-        private float playerDistanceToEnemy(Vector3 enemy, Vector3 player)
+        private void FixedUpdate()
         {
-            Vector2 distance = player - enemy;
-            return (float)Math.Sqrt(Math.Pow(distance.x, 2) + Math.Pow(distance.y, 2));
-        }
-        public void DamageTaking(float damage, Animator animator)
-        {
-            enemyHealth += (int)(enemyArmor * 0.3f);
-            enemyHealth -= (int)damage;
-            animator.SetTrigger("DamageTaking");
-            EnemyDie(animator.gameObject, animator);
-            StartCoroutine(EnemyStunning());
-        }
-        
-        public IEnumerator DamageTaking(float damage)
-        {
-            _animator.SetTrigger("Hurt");
-            if (!_isEnemyInAccessible && transform.rotation.y == 0)
-            {
-                StopCoroutine(_enemyDataCoroutine);
-                if (_enemyDataCoroutine == EnemyPatrolLeft()) _enemyDataCoroutine = EnemyPatrolRight();
-                else if (_enemyDataCoroutine == EnemyPatrolRight()) _enemyDataCoroutine = EnemyPatrolLeft();
-                transform.rotation = Quaternion.AngleAxis(180, Vector3.down);
-            }
-            else if (!_isEnemyInAccessible && transform.rotation.y == -1)
-            {
-                StopCoroutine(_enemyDataCoroutine);
-                if (_enemyDataCoroutine == EnemyPatrolLeft()) _enemyDataCoroutine = EnemyPatrolRight();
-                else if (_enemyDataCoroutine == EnemyPatrolRight()) _enemyDataCoroutine = EnemyPatrolLeft();
-                transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
-            }
-            StartCoroutine(EnemyColorChanging());
-            enemyHealth -= (int)damage;
-            StartCoroutine(EnemyDie(gameObject));
-            yield return null;
-            //StopAllCoroutines();
+            _stateMachine.CurrentState.HandleInput();
+            _stateMachine.CurrentState.LogicUpdate();
+            _stateMachine.CurrentState.PhysicsUpdate();
         }
 
-        private void StartPatrol()
+        public void EnemyAngryStateActivate()
         {
-            var number = Random.Range(0, 2);
-            switch (number)
-            {
-                case 0:
-                {
-                    CoroutineMemoryStart(EnemyPatrolLeft());
-                    break;
-                }
-                case 1:
-                {
-                    CoroutineMemoryStart(EnemyPatrolRight());
-                    break;
-                }
-            }
-        }
-        private IEnumerator EnemyStunning()
-        {
-            _isEnemyStun = true;
-            yield return new WaitForSeconds(stunTime);
-            _isEnemyStun = false;
+            _stateMachine.ChangeState(EnemyAngryState);
         }
 
+        public void DamageTaking(float damage)
+        {
+            playerDamage = damage;
+            _stateMachine.ChangeState(_enemyHurtState);
+        }
+
+        public void EnemyDisabling()
+        {
+            gameObject.SetActive(false);
+        }
+        public IEnumerator EnemyStunning(float stunClock)
+        {
+            isEnemyStun = true;
+            yield return new WaitForSeconds(stunClock);
+            isEnemyStun = false;
+        }
+
+        public IEnumerator EnemyWaiting(float waitTime)
+        {
+            animator.SetInteger("AnimState", 0);
+            isEnemyWait = true;
+            yield return new WaitForSeconds(waitTime);
+            isEnemyWait = false;
+        }
         private void Damage()
         {
-            if (Time.time >= _nextAttackTime)
-            {
-                Collider2D[] player = new Collider2D[20];
-                Physics2D.OverlapCircleNonAlloc(transform.position, attackRange + 2, player);
-                foreach (Collider2D dataEnemy in player)
-                {
-                    if (dataEnemy != null && dataEnemy.CompareTag("Player"))
-                    {
-                        if (!dataEnemy.GetComponent<ProgrammingPlayerFightSystem>().isPlayerBlock)
-                        {
-                            dataEnemy.GetComponent<ProgrammingPlayerFightSystem>().PlayerDamageTaking(enemyDamage);
-                        }
-                    }
-                }
-                _nextAttackTime = Time.time + 1f / attackSpeed;
-            }
-            _isEnemyAttack = false;
+            EnemyAngryState.Attack();
+        }
+
+        private void AttackComplete()
+        {
+            isEnemyAttack = false;
         }
         
-        //Need fixing!!!!!!
-        private void ObjectPushing(Transform obj, float powerForce, Vector2 direction)
+        //Need fixing?
+        private void ObjectPushing(Transform obj, float powerForce)
         {
-            obj.GetComponent<Rigidbody2D>().AddForce(direction.normalized * powerForce, ForceMode2D.Impulse);
+            if (transform.rotation.y == 0)
+            {
+                obj.GetComponent<Rigidbody2D>().AddForce(Vector2.left * powerForce, ForceMode2D.Impulse);
+            }
+            else
+            {
+                obj.GetComponent<Rigidbody2D>().AddForce(Vector2.right * powerForce, ForceMode2D.Impulse);
+            }
         }
         //
         private IEnumerator EnemyColorChanging()
@@ -146,182 +145,24 @@ namespace FightSystem
             GetComponent<SpriteRenderer>().color = Color.red;
             yield return new WaitForSeconds(0.15f);
             GetComponent<SpriteRenderer>().color = color;
-            StartCoroutine(EnemyStunning());
+            StartCoroutine(EnemyStunning(stunTime));
         }
         //
-        private IEnumerator EnemyDie(GameObject enemy)
+        public void EnemyDie()
         {
             if (enemyHealth <= 0)
             {
-                enemy.GetComponent<Collider2D>().enabled = false;
-                enemy.GetComponent<Enemy>().enabled = false;
-                enemy.SetActive(false);
-                print("Enemy die");
-            }
-            yield return null;
-        }
-        private void EnemyDie(GameObject enemy, Animator animator)
-        {
-            if (enemyHealth <= 0)
-            {
-                animator.SetTrigger("Die");
-                enemy.GetComponent<Collider2D>().enabled = false;
-                enemy.GetComponent<Enemy>().enabled = false;
-                enemy.SetActive(false);
-                print("Enemy die");
+                GetComponent<Rigidbody2D>().gravityScale = 0;
+                GetComponent<Collider2D>().enabled = false;
+                animator.SetTrigger(Death);
             }
         }
 
-        private IEnumerator EnemyPatrolRight()
-        {
-            _animator.SetInteger("AnimState", 2);
-            
-            isEnemyAngry = false;
-            transform.rotation = Quaternion.AngleAxis(180, Vector3.down);
-            Vector3 patrolEdgeRight = patrolPoint.position;
-            patrolEdgeRight += new Vector3(patrolRange, 0, 0);
-            patrolEdgeRight.y = 0;
-            while (transform.position.x < patrolPoint.position.x + patrolRange)
-            {
-                transform.position += Vector3.MoveTowards(Vector3.zero, patrolEdgeRight, patrolSpeed * 0.04f);
-                yield return null;
-            }
-            _animator.SetInteger("AnimState", 0);
-            yield return new WaitForSeconds(1.5f);
-            CoroutineMemoryStart(EnemyPatrolLeft());
-        }
-        private IEnumerator EnemyPatrolLeft()
-        {
-            _animator.SetInteger("AnimState", 2);
-            
-            isEnemyAngry = false;
-            transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
-            Vector3 patrolEdgeLeft = patrolPoint.position;
-            patrolEdgeLeft -= new Vector3(patrolRange, 0, 0);
-            patrolEdgeLeft.y = 0;
-            while (transform.position.x > patrolPoint.position.x - patrolRange)
-            {
-                transform.position -= Vector3.MoveTowards(Vector3.zero, patrolEdgeLeft, patrolSpeed * 0.04f);
-                yield return null;
-            }
-            _animator.SetInteger("AnimState", 0);
-            yield return new WaitForSeconds(1.5f);
-            CoroutineMemoryStart(EnemyPatrolRight());
-        }
-
-        public void RaiseTheAlarm(GameObject player)
-        {
-            GlobalEventManager.RaiseAlarm(player);
-        }
-        private void ReactionToAlarm(GameObject player)
-        {
-            if (_enemyDataCoroutine != null) StopCoroutine(_enemyDataCoroutine);
-            print(2);
-        }
-        private void FalseAlarm()
-        {
-            isEnemyAngry = false;
-        }
-
-        
-        //New system
-        public IEnumerator EnemyFightReaction(GameObject player)
-        {
-            StopCoroutine(_enemyDataCoroutine);
-            isEnemyAngry = true;
-
-            StartCoroutine(EnemyDistanceShorten(player));
-            yield return null;
-        }
-
-        private IEnumerator EnemyDistanceShorten(GameObject player)
-        {
-            var playerPosition = player.transform.position;
-            var enemyPosition = gameObject.transform.position;
-            var startPos = new Vector3(enemyPosition.x, enemyPosition.y, 0);
-            var endPos = new Vector3(playerPosition.x, enemyPosition.y, 0);
-            var endPosForDistance = new Vector3(playerPosition.x, enemyPosition.y, 0); ;
-            _isEnemyInAccessible = true;
-            while (_isEnemyInAccessible)
-            {
-                playerPosition = player.transform.position;
-                enemyPosition = gameObject.transform.position;
-                startPos = new Vector3(enemyPosition.x, enemyPosition.y, 0);
-                
-                if (playerPosition.x > enemyPosition.x)
-                {
-                    transform.rotation = Quaternion.AngleAxis(180, Vector3.down);
-                    endPos = new Vector3(playerPosition.x - attackRange + 0.01f, enemyPosition.y, 0);
-                }
-                else if (playerPosition.x < enemyPosition.x)
-                {
-                    transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
-                    endPos = new Vector3(playerPosition.x + attackRange - 0.01f, enemyPosition.y, 0);
-                }
-
-                var distance = playerDistanceToEnemy(startPos, endPosForDistance);
-
-                if (distance > attackRange && !_isEnemyStun)
-                {
-                    _animator.SetInteger("AnimState", 2);
-                    transform.position = Vector3.MoveTowards(startPos, endPos, enemyFollowingSpeed);
-                    startPos = new Vector3(enemyPosition.x, enemyPosition.y, 0);
-                }
-                
-                endPosForDistance = new Vector3(playerPosition.x, enemyPosition.y, 0);
-                distance = playerDistanceToEnemy(startPos, endPosForDistance);
-                
-                if (distance <= attackRange && !_isEnemyStun)
-                {
-                    _animator.SetInteger("AnimState", 1);
-                    if (!_isEnemyAttack && Time.time >= _nextAttackTime)
-                    {
-                        _animator.SetTrigger("Attack");
-                        _isEnemyAttack = true;
-                    }
-                }
-                
-                if (distance > 5)
-                {
-                    _isEnemyInAccessible = false;
-                    StopAllCoroutines();
-                    StartPatrol();
-                }
-                yield return null;
-            }
-        }
-        
         private void OnDrawGizmos()
         {
-            Gizmos.DrawWireSphere(interactionPoint.position, attackRange);
-        }
-
-        private void CoroutineMemoryStart(IEnumerator data)
-        {
-            _enemyDataCoroutine = data;
-            StartCoroutine(data);
-        }
-
-        private IEnumerator GlobalCoroutine()
-        {
-            for (int i = 0; i < 2; i++)
-                RegularCoroutine(i).ParallelCoroutinesGroup(this, "test");
-
-            while (CoroutineExtension.GroupProcessing("test"))
-                yield return null;
-
-            //Debug.Log("Group 1 finished");
-        }
-
-        private IEnumerator RegularCoroutine(int id)
-        {
-            int iterationsCount = Random.Range(1, 5);
-
-            for (int i = 1; i <= iterationsCount; i++)
-            {
-                yield return new WaitForSeconds(1);
-            }
-            //Debug.Log(string.Format("{0}: Coroutine {1} finished", Time.realtimeSinceStartup, id));
+            //Gizmos.DrawWireSphere(interactionPoint.position, attackRange);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, playerDetectionRange);
         }
     }
 }

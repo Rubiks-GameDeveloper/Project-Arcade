@@ -33,7 +33,7 @@ namespace TrapsScripts
                 var enemy = creature.GetComponent<Enemy>();
                 while (enemy.enemyHealth > 0)
                 {
-                    StartCoroutine(enemy.DamageTaking(2));
+                    //StartCoroutine(enemy.DamageTaking(2));
                     yield return new WaitForSeconds(0.35f);
                 }
             }

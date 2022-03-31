@@ -34,12 +34,12 @@ namespace TrapsScripts
                     yield return new WaitForSeconds(0.35f);
                 }
             }
-            else
+            else if (creature.CompareTag("Enemy"))
             {
                 var enemy = creature.GetComponent<Enemy>();
                 while (enemy.enemyHealth > 0)
                 {
-                    StartCoroutine(enemy.DamageTaking(spikesDamage));
+                    enemy.DamageTaking(spikesDamage);
                     yield return new WaitForSeconds(0.35f);
                 }
             }

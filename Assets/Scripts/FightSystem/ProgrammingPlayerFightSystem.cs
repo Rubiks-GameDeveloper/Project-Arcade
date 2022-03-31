@@ -13,6 +13,7 @@ namespace FightSystem
         [SerializeField] private float attackRange;
         [SerializeField] private float playerAttackSpeed;
         [SerializeField] private float playerAttackTime;
+        [SerializeField] private float playerPushingForce;
         private float _nextAttackTime;
         [SerializeField] private GameObject attackPoint;
         [SerializeField] private LayerMask enemyLayer;
@@ -46,11 +47,23 @@ namespace FightSystem
                 {
                     if (dataEnemy != null && !dataEnemy.CompareTag("EnemyReactionTrigger"))
                     {
-                        StartCoroutine(dataEnemy.GetComponent<Enemy>().DamageTaking(playerDamage));
-                        print(dataEnemy.name);
+                        dataEnemy.GetComponent<Enemy>().DamageTaking(playerDamage);
+                        ObjectPushing(dataEnemy.transform, playerPushingForce);
                     }
                 }
                 _nextAttackTime = Time.time + 1f / playerAttackSpeed;
+            }
+        }
+        private void ObjectPushing(Transform obj, float powerForce)
+        {
+            if (transform.rotation.y != 0)
+            {
+                //obj.GetComponent<Rigidbody2D>().velocity += new Vector2(playerPushingForce, 0);
+                obj.GetComponent<Rigidbody2D>().AddForce(Vector2.left * powerForce, ForceMode2D.Impulse);
+            }
+            else
+            {
+                obj.GetComponent<Rigidbody2D>().AddForce(Vector2.right * powerForce, ForceMode2D.Impulse);
             }
         }
         public void PlayerDamageTaking(float damage)
