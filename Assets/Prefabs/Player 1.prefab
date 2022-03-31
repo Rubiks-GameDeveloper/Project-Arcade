@@ -194,7 +194,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   timeDuration: 0.3
-  height: 4.3
+  height: 0.08
+  jumpPosition: {x: 0, y: 0, z: 0}
   jumpCount: 2
 --- !u!114 &4269230615121365186
 MonoBehaviour:
@@ -258,6 +259,7 @@ MonoBehaviour:
   attackRange: 1.2
   playerAttackSpeed: 1.7
   playerAttackTime: 0.4
+  playerPushingForce: 3
   attackPoint: {fileID: 4269230615371660211}
   enemyLayer:
     serializedVersion: 2
