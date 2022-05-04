@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using FightSystem;
 using UIScripts;
@@ -52,7 +53,7 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     private void GroundChecker()
     {
         Collider2D[] colliders = new Collider2D[25];
-        var size = new Vector2(groundCheckerRange, 0.2f);
+        var size = new Vector2(groundCheckerRange, 0.1f);
         var res = Physics2D.OverlapBoxNonAlloc(groundChecker.position, size, 0, colliders);
         if (res > 1)
         {
@@ -60,8 +61,8 @@ public class PlayerProgrammingTransformer : MonoBehaviour
             {
                 if (item != null && item.gameObject.CompareTag("Ground"))
                 {
-                    
                     _playerAnimator.SetBool(Grounded, true);
+                    if (jump.jumpCount < 2) StartCoroutine(JumpCountReceive());
                     return;
                 }
             }
@@ -69,24 +70,35 @@ public class PlayerProgrammingTransformer : MonoBehaviour
         _playerAnimator.SetBool(Grounded, false);
     }
 
-    public void JumpStopper(Collision2D other)
+    private void JumpStopper()
     {
-        if (other.gameObject.CompareTag("Ground"))
-        {
-            jump.StopAllCoroutines();
-            jump.jumpPosition = Vector3.zero;
-            GetComponent<Rigidbody2D>().gravityScale = 1;
-        }
+        jump.StopAllCoroutines();
+        jump.jumpPosition = Vector3.zero;
+        GetComponent<Rigidbody2D>().gravityScale = 1;
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Ground"))
+        if (other.contactCount < 1) return;
+        for (var a = 0; a < other.contactCount; a++)
         {
-            StopAllCoroutines();
-            StartCoroutine(JumpCountReceive());
+            if (!other.gameObject.CompareTag("Ground") ||
+                !(other.contacts[a].point.x < gameObject.transform.position.x + 0.41f) ||
+                !(other.contacts[a].point.x > gameObject.transform.position.x - 0.41f)) continue;
+            if (other.contacts[a].point.y > gameObject.transform.position.y + 0.5f) JumpStopper();
+            if (!(other.contacts[a].point.y < gameObject.transform.position.y + 0.2f)) continue;
+
             _playerAnimator.SetBool(Grounded, true);
         }
     }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.contactCount == 0)
+        {
+            StopAllCoroutines();
+        }
+    }
+
     private IEnumerator JumpCountReceive()
     {
         yield return new WaitForSeconds(0.15f);

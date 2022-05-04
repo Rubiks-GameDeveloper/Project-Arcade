@@ -5,6 +5,12 @@ using UnityEngine;
 public class SurfaceCollector : MonoBehaviour
 {
     private Vector3 _normal;
+    private Collider2D _playerCollider;
+
+    private void Start()
+    {
+        _playerCollider = gameObject.GetComponent<Collider2D>();
+    }
 
     public Vector3 Projection(Vector3 direction)
     {
@@ -12,16 +18,17 @@ public class SurfaceCollector : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.contacts[0].collider.gameObject.CompareTag("Ground")) _normal = collision.contacts[0].normal;
-        else
+        var parentPos = gameObject.transform.parent.position;
+        for (int i = 0; i < collision.contactCount; i++)
         {
-            for (int i = 0; i < collision.contactCount; i++)
+            if (collision.contacts[i].collider.gameObject.CompareTag("Ground") 
+                && collision.contacts[i].point.y < parentPos.y + 0.2f 
+                && collision.contacts[i].point.x < gameObject.transform.position.x + 0.401f 
+                && collision.contacts[i].point.x > gameObject.transform.position.x - 0.401f)
             {
-                if (collision.contacts[i].collider.gameObject.CompareTag("Ground"))
-                {
-                    _normal = collision.contacts[i].normal;
-                    break;
-                }
+                if (collision.contacts[i].normal.y > 0) _normal = collision.contacts[i].normal;
+                else _normal = new Vector3(collision.contacts[i].normal.x, collision.contacts[i].normal.y * -1, 0);
+                break;
             }
         }
     }
@@ -30,12 +37,12 @@ public class SurfaceCollector : MonoBehaviour
     {
         Vector3 pos = transform.position;
         Debug.DrawRay(pos, Projection(transform.right), Color.blue);
-        Debug.DrawRay(pos, _normal, Color.cyan);
+        Debug.DrawRay(pos, _normal, Color.red);
     }
 
     private void OnDrawGizmos()
     {
         Vector3 pos = transform.position;
-        Gizmos.DrawLine(pos, pos + _normal * 3);
+        //Gizmos.DrawLine(pos, pos + _normal * 3);
     }
 }

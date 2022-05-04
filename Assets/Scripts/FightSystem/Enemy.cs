@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using AdditionalMethods;
 using FightSystem.EnemyStates;
 using UnityEngine;
+using FluentBehaviourTree;
 using Random = UnityEngine.Random;
 
 namespace FightSystem
@@ -163,6 +164,34 @@ namespace FightSystem
             //Gizmos.DrawWireSphere(interactionPoint.position, attackRange);
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, playerDetectionRange);
+        }
+
+
+        IBehaviourTreeNode _treeNode;
+
+        public void Startup()
+        {
+            var builder = new BehaviourTreeBuilder();
+            _treeNode = builder
+                .Sequence("my-sequence")
+                    .Do("action1", t =>
+                    {
+                        //this
+                        return BehaviourTreeStatus.Success;
+                    })
+                    .Do("action2", t =>
+                    {
+                        //then this
+                        return BehaviourTreeStatus.Success;
+                    })
+                .End()
+                .Build();
+
+        }
+
+        private void Update()
+        {
+            _treeNode.Tick(new TimeData(Time.deltaTime));
         }
     }
 }
