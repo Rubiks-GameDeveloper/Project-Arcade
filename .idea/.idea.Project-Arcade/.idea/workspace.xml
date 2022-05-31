@@ -26,32 +26,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="937acea6-2954-430e-8f2a-53aaaf66f35a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/App.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/PlayerWithCameraAndCanvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/PlayerWithCameraAndCanvas.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Traps/UpMovingPlatform.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Traps/UpMovingPlatform.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Chaxta.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Chaxta.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Prototype.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Prototype.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FightSystem/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/Enemy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLlevels.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLevels.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLlevels/Ladder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLevels/Ladder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLlevels/Ladder.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLevels/Ladder.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLlevels/MovingPlatform.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLevels/MovingPlatform.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLlevels/MovingPlatform.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLevels/MovingPlatform.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLlevels/Portal_Ledder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLevels/Portal_Ledder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLlevels/Portal_Ledder.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLevels/Portal_Ledder.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLlevels/SecondMovingPlatform.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLevels/SecondMovingPlatform.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLlevels/SecondMovingPlatform.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ForFunOnLevels/SecondMovingPlatform.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/JumpStopper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/JumpStopper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PlayerProgrammingTransformer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PlayerProgrammingTransformer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/SurfaceCollector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/SurfaceCollector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Pictures/Palette/Level1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Pictures/Palette/Level1.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/FirstLocation.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/FirstLocation.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UIScripts/HintsPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UIScripts/HintsPlayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/RiderScriptEditorPersistedState.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/RiderScriptEditorPersistedState.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,11 +50,9 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/CameraTransform.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../Maze tester/Assets/Scripts/SkillApplier.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../State Machine for Unity Final/Assets/RW/Scripts/StateMachine.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/FightSystem/ProgrammingPlayerFightSystem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/FightSystem/SuperSquirrel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/FightSystem/ProgrammingPlayerFightSystem.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/CameraTransform.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -92,6 +70,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PlayerProgrammingTransformer.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FightSystem/Enemy.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/FightSystem/SuperSquirrel.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/UIScripts/HintsPlayer.cs" />
       </list>
     </option>
   </component>
@@ -121,9 +100,8 @@
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
-      <option name="projectPathOnTarget" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
@@ -131,9 +109,8 @@
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
-      <option name="projectPathOnTarget" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
@@ -202,6 +179,8 @@
       <workItem from="1651599200937" duration="12633000" />
       <workItem from="1651666167268" duration="6491000" />
       <workItem from="1651687079951" duration="1340000" />
+      <workItem from="1652436886115" duration="2000" />
+      <workItem from="1653647713441" duration="1568000" />
     </task>
     <servers />
   </component>
@@ -233,6 +212,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />

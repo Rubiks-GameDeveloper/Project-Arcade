@@ -8,7 +8,7 @@ public class HintsPlayer : MonoBehaviour
 
     void Start()
     {
-        text.SetActive(false);
+        text.SetActive(true);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
