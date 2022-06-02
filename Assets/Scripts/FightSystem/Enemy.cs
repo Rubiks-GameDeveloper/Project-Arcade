@@ -1,11 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using AdditionalMethods;
 using FightSystem.EnemyStates;
 using UnityEngine;
 using FluentBehaviourTree;
-using Random = UnityEngine.Random;
 
 namespace FightSystem
 {
@@ -22,10 +19,10 @@ namespace FightSystem
         public float enemyAngryDistance;
 
         public VectorMovement vectorMovement;
-        
-        [Header("Values for patrol")]
-        public Transform patrolPoint;
-        public float patrolRange;
+
+        [Header("Values for patrol")] 
+        [SerializeField] private Transform patrolPointLeft;
+        [SerializeField] private Transform patrolPointRight;
         public float patrolWaitTime;
         [Range(0.01f, 1.5f)] public float patrolSpeed;
     
@@ -36,6 +33,7 @@ namespace FightSystem
         [SerializeField] private Transform interactionPoint;
         public float stunTime;
 
+        #region OldProperty
         public float playerDetectionRange;
 
         public Animator animator;
@@ -63,10 +61,11 @@ namespace FightSystem
 
         private readonly StateMachine _enemyStateMachine = new StateMachine();
         private static readonly int Death = Animator.StringToHash("Death");
-
+        #endregion
+        #region OldRealization
         private void Awake()
         {
-            _stateMachine = new StateMachine();
+            /*_stateMachine = new StateMachine();
 
             EnemyAngryState = new EnemyAngryState(this, _stateMachine);
             _enemyHurtState = new EnemyHurtState(this, _stateMachine);
@@ -74,31 +73,28 @@ namespace FightSystem
             EnemyStandingState = new EnemyPatrolState(this, _stateMachine);
             EnemyPatrolState = new EnemyPatrolState(this, _stateMachine);
 
-            animator = GetComponent<Animator>();
+            animator = GetComponent<Animator>();*/
+            Startup();
         }
-
         private void Start()
         {
-            _stateMachine.Initialize(EnemyStandingState);
+            //_stateMachine.Initialize(EnemyStandingState);
         }
-        private void FixedUpdate()
+        /*private void FixedUpdate()
         {
             _stateMachine.CurrentState.HandleInput();
             _stateMachine.CurrentState.LogicUpdate();
             _stateMachine.CurrentState.PhysicsUpdate();
-        }
-
+        }*/
         public void EnemyAngryStateActivate()
         {
             _stateMachine.ChangeState(EnemyAngryState);
         }
-
         public void DamageTaking(float damage)
         {
             playerDamage = damage;
             _stateMachine.ChangeState(_enemyHurtState);
         }
-
         public void EnemyDisabling()
         {
             gameObject.SetActive(false);
@@ -109,7 +105,6 @@ namespace FightSystem
             yield return new WaitForSeconds(stunClock);
             isEnemyStun = false;
         }
-
         public IEnumerator EnemyWaiting(float waitTime)
         {
             animator.SetInteger("AnimState", 0);
@@ -121,13 +116,10 @@ namespace FightSystem
         {
             EnemyAngryState.Attack();
         }
-
         private void AttackComplete()
         {
             isEnemyAttack = false;
         }
-        
-        //Need fixing?
         private void ObjectPushing(Transform obj, float powerForce)
         {
             if (transform.rotation.y == 0)
@@ -139,7 +131,6 @@ namespace FightSystem
                 obj.GetComponent<Rigidbody2D>().AddForce(Vector2.right * powerForce, ForceMode2D.Impulse);
             }
         }
-        //
         private IEnumerator EnemyColorChanging()
         {
             var color = GetComponent<SpriteRenderer>().color;
@@ -148,7 +139,6 @@ namespace FightSystem
             GetComponent<SpriteRenderer>().color = color;
             StartCoroutine(EnemyStunning(stunTime));
         }
-        //
         public void EnemyDie()
         {
             if (enemyHealth <= 0)
@@ -158,32 +148,29 @@ namespace FightSystem
                 animator.SetTrigger(Death);
             }
         }
-
         private void OnDrawGizmos()
         {
-            //Gizmos.DrawWireSphere(interactionPoint.position, attackRange);
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, playerDetectionRange);
         }
 
-
+        #endregion
+        
         IBehaviourTreeNode _treeNode;
+        private bool _isEnemyPatrol;
+        private bool _isEnemyPatrolLeft;
+        private bool _isEnemyPatrolRight;
 
         public void Startup()
         {
             var builder = new BehaviourTreeBuilder();
             _treeNode = builder
-                .Sequence("my-sequence")
-                    .Do("action1", t =>
-                    {
-                        //this
-                        return BehaviourTreeStatus.Success;
-                    })
-                    .Do("action2", t =>
-                    {
-                        //then this
-                        return BehaviourTreeStatus.Success;
-                    })
+                .Selector("EnemyPatrol")
+                .Condition("IsBlockageInVision", t => IsBlockageInVision())
+                .Do("Move", t =>
+                {
+                    return BehaviourTreeStatus.Running;
+                })
                 .End()
                 .Build();
 
@@ -192,6 +179,18 @@ namespace FightSystem
         private void Update()
         {
             _treeNode.Tick(new TimeData(Time.deltaTime));
+        }
+
+        private BehaviourTreeStatus EnemyPatrol()
+        {
+            
+
+            return BehaviourTreeStatus.Running;
+        }
+
+        private bool IsBlockageInVision()
+        {
+            return true;
         }
     }
 }

@@ -18,7 +18,7 @@ public class SurfaceCollector : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        var parentPos = gameObject.transform.parent.position;
+        var parentPos = gameObject.transform.position;
         for (int i = 0; i < collision.contactCount; i++)
         {
             if (collision.contacts[i].collider.gameObject.CompareTag("Ground") 

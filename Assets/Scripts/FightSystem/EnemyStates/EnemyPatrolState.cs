@@ -24,12 +24,12 @@ namespace FightSystem.EnemyStates
             if (!_isEnemyPatrolLeft && !_isEnemyPatrolRight)
             {
                 StartPatrol();
-                _patrolEdgeRight = enemy.patrolPoint.position;
-                _patrolEdgeRight += new Vector3(enemy.patrolRange, 0, 0);
+                //_patrolEdgeRight = enemy.patrolPoint.position;
+                //_patrolEdgeRight += new Vector3(enemy.patrolRange, 0, 0);
                 _patrolEdgeRight.y = 0;
             
-                _patrolEdgeLeft = enemy.patrolPoint.position;
-                _patrolEdgeLeft -= new Vector3(enemy.patrolRange, 0, 0);
+                //_patrolEdgeLeft = enemy.patrolPoint.position;
+                //_patrolEdgeLeft -= new Vector3(enemy.patrolRange, 0, 0);
                 _patrolEdgeLeft.y = 0;
             }
         }
@@ -76,7 +76,7 @@ namespace FightSystem.EnemyStates
         {
             enemy.animator.SetInteger("AnimState", 2);
             enemy.transform.rotation = Quaternion.AngleAxis(180, Vector3.down);
-            
+            /*
             if (enemy.transform.position.x < enemy.patrolPoint.position.x + enemy.patrolRange)
             {
                 enemy.vectorMovement.Move(_patrolEdgeRight, enemy.patrolSpeed);
@@ -87,13 +87,13 @@ namespace FightSystem.EnemyStates
                 _isEnemyPatrolRight = false;
                 _isEnemyPatrolLeft = true;
                 enemy.StartCoroutine(enemy.EnemyWaiting(enemy.patrolWaitTime));
-            }
+            }*/
         }
         private void EnemyPatrolLeft()
         {
             enemy.animator.SetInteger("AnimState", 2);
             enemy.transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
-            
+            /*
             if (enemy.transform.position.x > enemy.patrolPoint.position.x - enemy.patrolRange)
             {
                 enemy.vectorMovement.Move(-_patrolEdgeLeft, enemy.patrolSpeed);
@@ -104,7 +104,7 @@ namespace FightSystem.EnemyStates
                 _isEnemyPatrolLeft = false;
                 _isEnemyPatrolRight = true;
                 enemy.StartCoroutine(enemy.EnemyWaiting(enemy.patrolWaitTime));
-            }
+            }*/
         }
     }
 }
