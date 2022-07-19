@@ -6,21 +6,20 @@ namespace FightSystem
     public class EnemyReacting : MonoBehaviour
     {
         [SerializeField] private Enemy data;
+        public bool isPlayerInVision;
+        public GameObject player;
         
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Player")) data.EnemyAngryStateActivate();
+            //if (other.CompareTag("Player")) data.EnemyAngryStateActivate();
+            if (!other.CompareTag("Player")) return;
+            isPlayerInVision = true; player = other.gameObject;
         }
 
-        private void EnemyPerformance(GameObject player)
+        private void OnTriggerExit2D(Collider2D other)
         {
-            //Shorten distance if necessary (unusual shorten include)
-            //Attack
-            //Increase the distance to safe
-            //Wait for next attack
-            //Stay in block (if you have the shield)
-            //Go back if player shorten distance
-            //If player left visible distance go patrol
+            if (other.CompareTag("Player")) isPlayerInVision = false;
+            player = null;
         }
     }
 }

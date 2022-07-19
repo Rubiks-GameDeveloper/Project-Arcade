@@ -63,7 +63,7 @@ namespace FightSystem.EnemyStates
             IsEnemyAngry = false;
         }
 
-        public void Attack()
+        /*public void Attack()
         {
             if (!enemy.isEnemyStun)
             {
@@ -85,7 +85,7 @@ namespace FightSystem.EnemyStates
                 }
                 _nextAttackTime = Time.time + 1f / enemy.attackSpeed;
             }
-        }
+        }*/
         
         private void ObjectPushing(Transform obj, float powerForce)
         {

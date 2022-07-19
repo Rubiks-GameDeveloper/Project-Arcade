@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1874582775909751104}
   - component: {fileID: 1874582775909751107}
-  - component: {fileID: 1874582775909751106}
   - component: {fileID: 3612142533190070333}
   - component: {fileID: 4489728434236338945}
   - component: {fileID: 3612142531509215573}
+  - component: {fileID: 4360837185468300800}
   - component: {fileID: 3612142531509215572}
   - component: {fileID: 1018098255281974660}
   - component: {fileID: -7195236451136997206}
@@ -92,32 +92,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &1874582775909751106
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1874582775909751109}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.08859298}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 0.003}
-  m_EdgeRadius: 0
 --- !u!95 &3612142533190070333
 Animator:
   serializedVersion: 3
@@ -175,6 +149,22 @@ MonoBehaviour:
   playerLayerMask:
     serializedVersion: 2
     m_Bits: 128
+--- !u!70 &4360837185468300800
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874582775909751109}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.016627371, y: 0.89691025}
+  m_Size: {x: 0.9632548, y: 1.59925}
+  m_Direction: 0
 --- !u!114 &3612142531509215572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,8 +185,9 @@ MonoBehaviour:
   enemyDamage: 3
   enemyAngryDistance: 7
   vectorMovement: {fileID: 1018098255281974660}
-  patrolPoint: {fileID: 0}
-  patrolRange: 3.5
+  reactingToPlayer: {fileID: 0}
+  patrolPointLeft: {fileID: 0}
+  patrolPointRight: {fileID: 0}
   patrolWaitTime: 1.5
   patrolSpeed: 0.7
   enemyFollowingSpeed: 0.05
@@ -281,6 +272,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 3612142531509215572}
+  isPlayerInVision: 0
+  player: {fileID: 0}
 --- !u!68 &7281315599223893229
 EdgeCollider2D:
   m_ObjectHideFlags: 0

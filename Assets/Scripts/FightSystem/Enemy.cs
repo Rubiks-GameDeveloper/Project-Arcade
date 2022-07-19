@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using AdditionalMethods;
 using FightSystem.EnemyStates;
@@ -19,6 +20,7 @@ namespace FightSystem
         public float enemyAngryDistance;
 
         public VectorMovement vectorMovement;
+        [SerializeField] private EnemyReacting reactingToPlayer;
 
         [Header("Values for patrol")] 
         [SerializeField] private Transform patrolPointLeft;
@@ -33,6 +35,10 @@ namespace FightSystem
         [SerializeField] private Transform interactionPoint;
         public float stunTime;
 
+
+        private float _currentSpeed;
+
+        private Color _enemyMainColor;
         #region OldProperty
         public float playerDetectionRange;
 
@@ -65,6 +71,8 @@ namespace FightSystem
         #region OldRealization
         private void Awake()
         {
+            _enemyMainColor = GetComponent<SpriteRenderer>().color;
+            
             /*_stateMachine = new StateMachine();
 
             EnemyAngryState = new EnemyAngryState(this, _stateMachine);
@@ -72,13 +80,14 @@ namespace FightSystem
             _enemyGroundedState = new EnemyGroundedState(this, _stateMachine);
             EnemyStandingState = new EnemyPatrolState(this, _stateMachine);
             EnemyPatrolState = new EnemyPatrolState(this, _stateMachine);
-
-            animator = GetComponent<Animator>();*/
+            */
+            animator = GetComponent<Animator>();
             Startup();
         }
         private void Start()
         {
             //_stateMachine.Initialize(EnemyStandingState);
+            //Startup();
         }
         /*private void FixedUpdate()
         {
@@ -114,7 +123,7 @@ namespace FightSystem
         }
         private void Damage()
         {
-            EnemyAngryState.Attack();
+            //EnemyAngryState.Attack();
         }
         private void AttackComplete()
         {
@@ -161,19 +170,28 @@ namespace FightSystem
         private bool _isEnemyPatrolLeft;
         private bool _isEnemyPatrolRight;
 
-        public void Startup()
+        private float PlayerDistanceToEnemy(Vector3 enemyPos, Vector3 player)
+        {
+            Vector2 distance = player - enemyPos;
+            return (float)Math.Sqrt(Math.Pow(distance.x, 2) + Math.Pow(distance.y, 2));
+        }
+
+        private void Startup()
         {
             var builder = new BehaviourTreeBuilder();
             _treeNode = builder
-                .Selector("EnemyPatrol")
-                .Condition("IsBlockageInVision", t => IsBlockageInVision())
-                .Do("Move", t =>
-                {
-                    return BehaviourTreeStatus.Running;
-                })
+                .Parallel("All", 1, 1)
+                    .Do("Movement", t => EnemyMovement())
+                    .Selector("Another one")
+                        .Condition("Is Player in vision", t => !IsPlayerInVision())
+                        .Do("Attack", t => EnemyMovement())
+                    .End()
+                    .Selector("Player attack range")
+                        .Condition("Is player in attack range", t => !IsPlayerInAttackRange())
+                        .Do("Attack", t => PrepareToAttack())
+                    .End()
                 .End()
                 .Build();
-
         }
 
         private void Update()
@@ -181,16 +199,80 @@ namespace FightSystem
             _treeNode.Tick(new TimeData(Time.deltaTime));
         }
 
-        private BehaviourTreeStatus EnemyPatrol()
+        private BehaviourTreeStatus EnemyStatusFollowing()
         {
-            
-
+            _currentSpeed = enemyFollowingSpeed;
             return BehaviourTreeStatus.Running;
         }
 
-        private bool IsBlockageInVision()
+        private BehaviourTreeStatus EnemyMovement()
         {
-            return true;
+            var player = reactingToPlayer.player;
+            if (player != null) vectorMovement.Move(CoordinatePlayerPosition(player), _currentSpeed);
+            return BehaviourTreeStatus.Running;
+        }
+
+        private Vector3 CoordinatePlayerPosition(GameObject player)
+        {
+            if (player.transform.position.x + attackRange - 0.3f  < transform.position.x)
+            {
+                transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+                _currentSpeed = enemyFollowingSpeed;
+                return Vector3.left;
+            }
+            if (player.transform.position.x - attackRange + 0.3f > transform.position.x)
+            {
+                transform.rotation = Quaternion.AngleAxis(180, Vector3.down);
+                _currentSpeed = enemyFollowingSpeed;
+                return Vector3.right;
+            }
+
+            _currentSpeed = 0;
+            return Vector3.left;
+        }
+       
+        private BehaviourTreeStatus PrepareToAttack()
+        {
+            //GetComponent<SpriteRenderer>().color = Color.red;
+            if (_nextAttackTime <= Time.time) animator.SetTrigger("Attack");
+            return BehaviourTreeStatus.Running;
+        }
+    
+        public void Attack()
+        {
+            if (!isEnemyStun)
+            {
+                Collider2D[] player = new Collider2D[20];
+                Physics2D.OverlapCircleNonAlloc(transform.position, attackRange + 2, player);
+                foreach (Collider2D dataEnemy in player)
+                {
+                    if (dataEnemy != null && dataEnemy.CompareTag("Player") && !isEnemyStun)
+                    {
+                        var playerFightComponent = dataEnemy.GetComponent<ProgrammingPlayerFightSystem>();
+                        var isPlayerBlock = dataEnemy.transform.rotation.y == transform.rotation.y &&
+                                            playerFightComponent.isPlayerBlock;
+                        if (!isPlayerBlock)
+                        {
+                            playerFightComponent.PlayerDamageTaking(enemyDamage);
+                            ObjectPushing(dataEnemy.transform, pushingForce);
+                        }
+                    }
+                }
+                _nextAttackTime = Time.time + 1f / attackSpeed;
+            }
+        }
+        private bool IsPlayerInAttackRange()
+        {
+            print(1);
+            if (reactingToPlayer.player != null)
+                return PlayerDistanceToEnemy(transform.position, reactingToPlayer.player.transform.position) <=
+                       attackRange;
+            return false; 
+        }
+
+        private bool IsPlayerInVision()
+        {
+            return reactingToPlayer.isPlayerInVision;
         }
     }
 }
