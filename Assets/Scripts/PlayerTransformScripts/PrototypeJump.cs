@@ -7,6 +7,7 @@ public class PrototypeJump : MonoBehaviour
 
     [SerializeField] private float timeDuration = 1;
     [SerializeField] private float height = 1;
+    [SerializeField] [Range(1, 2)] private float upTimeCoefficient;
 
     private Rigidbody2D _rb;
     private Coroutine _currentJump;
@@ -46,7 +47,7 @@ public class PrototypeJump : MonoBehaviour
         while (progress < 1)
         {
             expiredTime += Time.deltaTime;
-            progress = expiredTime / timeDuration;
+            progress = expiredTime / timeDuration * upTimeCoefficient;
             
             var endPos = new Vector3(0, yAnimation.Evaluate(progress) * height, 0);
             //jumpPosition = Vector3.Lerp(Vector3.zero, endPos, Time.deltaTime);

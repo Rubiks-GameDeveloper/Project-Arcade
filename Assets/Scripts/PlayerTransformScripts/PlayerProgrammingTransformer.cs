@@ -102,7 +102,7 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     private IEnumerator JumpCountReceive()
     {
         yield return new WaitForSeconds(0.15f);
-        jump.jumpCount = 2;
+        if (jump.jumpCount < 2) jump.jumpCount = 2;
     }
     
     
