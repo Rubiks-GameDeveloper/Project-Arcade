@@ -1109,7 +1109,7 @@ GameObject:
   - component: {fileID: 7494196349460427373}
   m_Layer: 0
   m_Name: PlayerWithCameraAndCanvas
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2742,6 +2742,46 @@ PrefabInstance:
       propertyPath: playerJoystick
       value: 
       objectReference: {fileID: 6763526021042961772}
+    - target: {fileID: 4269230615121365189, guid: 513ef13086ea6b146983d61931c66295, type: 3}
+      propertyPath: height
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269230615121365189, guid: 513ef13086ea6b146983d61931c66295, type: 3}
+      propertyPath: upTimeCoefficient
+      value: 1.306
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269230615121365189, guid: 513ef13086ea6b146983d61931c66295, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[1].time
+      value: 0.25657105
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269230615121365189, guid: 513ef13086ea6b146983d61931c66295, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[1].value
+      value: 1.0003458
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269230615121365189, guid: 513ef13086ea6b146983d61931c66295, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[0].inSlope
+      value: 25.429857
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269230615121365189, guid: 513ef13086ea6b146983d61931c66295, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[1].inSlope
+      value: -11.21841
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269230615121365189, guid: 513ef13086ea6b146983d61931c66295, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[0].outSlope
+      value: 25.429857
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269230615121365189, guid: 513ef13086ea6b146983d61931c66295, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[1].inWeight
+      value: 0.16449279
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269230615121365189, guid: 513ef13086ea6b146983d61931c66295, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[1].outSlope
+      value: -11.21841
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269230615121365189, guid: 513ef13086ea6b146983d61931c66295, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[0].outWeight
+      value: 0.064741686
+      objectReference: {fileID: 0}
     - target: {fileID: 4269230615121365191, guid: 513ef13086ea6b146983d61931c66295, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2822,24 +2862,19 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 7494196349345176817}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4269230615121365241, guid: 513ef13086ea6b146983d61931c66295, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 513ef13086ea6b146983d61931c66295, type: 3}
+--- !u!1 &4173969154091072958 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4269230615121365242, guid: 513ef13086ea6b146983d61931c66295, type: 3}
+  m_PrefabInstance: {fileID: 203700423570306372}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4173969154091072899 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4269230615121365191, guid: 513ef13086ea6b146983d61931c66295, type: 3}
   m_PrefabInstance: {fileID: 203700423570306372}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4173969154091072896 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4269230615121365188, guid: 513ef13086ea6b146983d61931c66295, type: 3}
-  m_PrefabInstance: {fileID: 203700423570306372}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4173969154091072958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f81a5c96042d1a44abcceadacc5066c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7774209716423010046 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7579623012229026746, guid: 513ef13086ea6b146983d61931c66295, type: 3}
@@ -2851,11 +2886,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8429b5bb7ac252a49b2920b71c16a1fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &4173969154091072958 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4269230615121365242, guid: 513ef13086ea6b146983d61931c66295, type: 3}
+--- !u!114 &4173969154091072896 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4269230615121365188, guid: 513ef13086ea6b146983d61931c66295, type: 3}
   m_PrefabInstance: {fileID: 203700423570306372}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4173969154091072958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f81a5c96042d1a44abcceadacc5066c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!70 &874153879
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4173969154091072958}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.006341934, y: 0.6833465}
+  m_Size: {x: 0.85523605, y: 1.3360553}
+  m_Direction: 0
 --- !u!1001 &7494196349514210267
 PrefabInstance:
   m_ObjectHideFlags: 0

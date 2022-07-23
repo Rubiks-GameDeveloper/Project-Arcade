@@ -47194,17 +47194,57 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4173969154091072897, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
+      propertyPath: height
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173969154091072897, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
+      propertyPath: timeDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173969154091072897, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
+      propertyPath: upTimeCoefficient
+      value: 1.413
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173969154091072897, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[1].time
+      value: 0.25486207
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173969154091072897, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[0].inSlope
+      value: 28.087357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173969154091072897, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[1].inSlope
+      value: -24.692898
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173969154091072897, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[0].outSlope
+      value: 28.087357
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173969154091072897, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[1].inWeight
+      value: 0.09305958
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173969154091072897, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[1].outSlope
+      value: -24.692898
+      objectReference: {fileID: 0}
+    - target: {fileID: 4173969154091072897, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
+      propertyPath: yAnimation.m_Curve.Array.data[0].outWeight
+      value: 0.083949625
+      objectReference: {fileID: 0}
     - target: {fileID: 7494196349460427373, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7494196349460427373, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 250.4
+      value: 145.2
       objectReference: {fileID: 0}
     - target: {fileID: 7494196349460427373, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -123.1
+      value: -133.14
       objectReference: {fileID: 0}
     - target: {fileID: 7494196349460427373, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
       propertyPath: m_LocalPosition.z

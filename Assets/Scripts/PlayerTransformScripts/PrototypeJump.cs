@@ -50,9 +50,9 @@ public class PrototypeJump : MonoBehaviour
             progress = expiredTime / timeDuration * upTimeCoefficient;
             
             var endPos = new Vector3(0, yAnimation.Evaluate(progress) * height, 0);
-            //jumpPosition = Vector3.Lerp(Vector3.zero, endPos, Time.deltaTime);
-            jumpPosition = endPos;
 
+            if (progress < 0.49f) jumpPosition = endPos;
+            else jumpPosition = -endPos;
             yield return null;
         }
         _rb.gravityScale = 1;
