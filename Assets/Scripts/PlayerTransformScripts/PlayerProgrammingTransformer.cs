@@ -13,12 +13,16 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     //private bool _onGround;
     [SerializeField] private float groundCheckerRange;
     [SerializeField] private float playerSpeed;
+    [SerializeField] [Range(1f, 25f)] private float playerFallSpeed;
     
     [SerializeField] private Transform groundChecker;
     private Animator _playerAnimator;
     private ProgrammingPlayerFightSystem _playerFightSystem;
     private static readonly int Grounded = Animator.StringToHash("Grounded");
     private static readonly int Run = Animator.StringToHash("Run");
+
+
+    public bool isGravityActive = false;
 
     private void Start()
     {
@@ -45,15 +49,16 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     }
     public void Jump()
     {
-        if (!_playerFightSystem.isPlayerStun || !_playerFightSystem.isPlayerAttack || !_playerFightSystem.isPlayerBlock)
+        if (!_playerFightSystem.isPlayerStun || !_playerFightSystem.isPlayerAttack || !_playerFightSystem.isPlayerBlock && jump.jumpCount != 0)
         {
+            isGravityActive = false;
             jump.PlayerJump(_playerAnimator);
         }
     }
     private void GroundChecker()
     {
         Collider2D[] colliders = new Collider2D[25];
-        var size = new Vector2(groundCheckerRange, 0.1f);
+        var size = new Vector2(groundCheckerRange, 0.25f);
         var res = Physics2D.OverlapBoxNonAlloc(groundChecker.position, size, 0, colliders);
         if (res > 1)
         {
@@ -62,19 +67,21 @@ public class PlayerProgrammingTransformer : MonoBehaviour
                 if (item != null && item.gameObject.CompareTag("Ground"))
                 {
                     _playerAnimator.SetBool(Grounded, true);
-                    if (jump.jumpCount < 2) StartCoroutine(JumpCountReceive());
+                    if (jump.jumpCount < 1) StartCoroutine(JumpCountReceive());
+                    //isGravityActive = false;
                     return;
                 }
             }
         }
+
+        if (jump.jumpPosition == Vector3.zero) isGravityActive = true;
         _playerAnimator.SetBool(Grounded, false);
     }
-
     private void JumpStopper()
     {
         jump.StopAllCoroutines();
         jump.jumpPosition = Vector3.zero;
-        GetComponent<Rigidbody2D>().gravityScale = 1;
+        isGravityActive = true;
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -108,13 +115,24 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     
     private void FixedUpdate()
     {
+        ArtificialGravity();
         GroundChecker();
         PlayerMovement();
         if (Input.GetButtonDown("Jump")) Jump();
     }
+
+    private void ArtificialGravity()
+    {
+        if (isGravityActive)
+        {
+            playerMove.Move(Vector3.down, playerFallSpeed);
+            
+        }
+    }
+
     private void OnDrawGizmos()
     {
-        var size = new Vector2(groundCheckerRange, 0.2f);
+        var size = new Vector2(groundCheckerRange, 0.25f);
         Gizmos.DrawWireCube(groundChecker.position, size);
     }
 }

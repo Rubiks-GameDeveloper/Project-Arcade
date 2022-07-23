@@ -18,11 +18,14 @@ namespace ForFunOnLevels
             transform.position = _movingUp ? new Vector2(transform.position.x, transform.position.y + speed * Time.deltaTime) : new Vector2(transform.position.x, transform.position.y - speed * Time.deltaTime);
         }
 
-        private void OnCollisionStay2D(Collision2D collision)
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            //if (collision.gameObject.CompareTag("Player")) 
+            if (collision.gameObject.CompareTag("Player")) collision.transform.SetParent(gameObject.transform);
         }
-        
-        
+
+        private void OnCollisionExit2D(Collision2D other)
+        {
+            if (other.gameObject.CompareTag("Player")) other.transform.SetParent(default);
+        }
     }
 }

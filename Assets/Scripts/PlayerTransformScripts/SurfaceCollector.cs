@@ -33,6 +33,11 @@ public class SurfaceCollector : MonoBehaviour
         }
     }
 
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        _normal = Vector3.forward;
+    }
+
     private void Update()
     {
         Vector3 pos = transform.position;

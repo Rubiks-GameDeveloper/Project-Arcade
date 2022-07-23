@@ -42,7 +42,7 @@ public class PrototypeJump : MonoBehaviour
         float expiredTime = 0;
         float progress = 0;
 
-        _rb.gravityScale = 0;
+        //_rb.gravityScale = 0;
 
         while (progress < 1)
         {
@@ -52,10 +52,10 @@ public class PrototypeJump : MonoBehaviour
             var endPos = new Vector3(0, yAnimation.Evaluate(progress) * height, 0);
 
             if (progress < 0.49f) jumpPosition = endPos;
-            else jumpPosition = -endPos;
+            //else jumpPosition = -endPos;
             yield return null;
         }
-        _rb.gravityScale = 1;
+        //_rb.gravityScale = 1;
         jumpPosition = Vector3.zero;
     }
     public void PlayerJump(Animator animator)
