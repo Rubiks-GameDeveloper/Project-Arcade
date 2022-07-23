@@ -25,16 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="937acea6-2954-430e-8f2a-53aaaf66f35a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/PlayerWithCameraAndCanvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/PlayerWithCameraAndCanvas.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Chaxta.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Chaxta.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/FirstLocation.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/FirstLocation.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PrototypeJump.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PrototypeJump.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
-    </list>
+    <list default="true" id="937acea6-2954-430e-8f2a-53aaaf66f35a" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -196,7 +187,7 @@
       <workItem from="1654718834385" duration="2971000" />
       <workItem from="1654799218422" duration="7521000" />
       <workItem from="1658257003496" duration="3018000" />
-      <workItem from="1658534730454" duration="1655000" />
+      <workItem from="1658534730454" duration="2056000" />
     </task>
     <servers />
   </component>
