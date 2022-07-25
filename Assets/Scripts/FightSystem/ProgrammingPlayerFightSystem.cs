@@ -78,6 +78,7 @@ namespace FightSystem
             {
                 dieScreen.SetActive(true);
                 _playerAnimator.SetBool("Death", true);
+                Dissolve.IsDissolving = true;
             }
             else
             {

@@ -7,20 +7,33 @@ namespace ForFunOnLevels
 {
     public class Ladder : MonoBehaviour
     {
-        [SerializeField] private float movingUpSpeed;
         [SerializeField] private GameObject upDownUI;
-        public UnityEvent playerInLadder;
+        [SerializeField] private bool isPlayerLowerPosition;
+        public GameObject upperExit;
+        public GameObject lowerExit;
+        
 
-        private void Start()
+        public void PlayerLadderTeleportation(GameObject player)
         {
-            //playerInLadder.AddListener(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerProgrammingTransformer>());
+            if (isPlayerLowerPosition)
+            {
+                player.transform.position = upperExit.transform.position;
+                isPlayerLowerPosition = false;
+            }
+            else
+            {
+                player.transform.position = lowerExit.transform.position;
+                isPlayerLowerPosition = true;
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
             {
-                playerInLadder.Invoke();
+                upDownUI = other.GetComponent<PlayerProgrammingTransformer>().ladderButton;
+                upDownUI.SetActive(true);
+                other.GetComponent<PlayerProgrammingTransformer>().Ladder = gameObject;
             }
         }
 
@@ -28,7 +41,8 @@ namespace ForFunOnLevels
         {
             if (other.CompareTag("Player"))
             {
-                playerInLadder.Invoke();
+                upDownUI.SetActive(false);
+                other.GetComponent<PlayerProgrammingTransformer>().Ladder = gameObject;
             }
         }
     }

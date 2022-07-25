@@ -31,21 +31,13 @@ public class MovingPlatform : MonoBehaviour
         }
     }
     
-   /* private void OnCollisionEnter2D(Collision2D other) 
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            other.transform.parent = this.transform;
-        }
-        
+        if (collision.gameObject.CompareTag("Player")) collision.transform.SetParent(gameObject.transform);
     }
-    
-    private void OnCollisionExit2D(Collision2D other) 
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            other.transform.parent = null;
-        }
 
-    }*/
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Player")) other.transform.SetParent(default);
+    }
 }

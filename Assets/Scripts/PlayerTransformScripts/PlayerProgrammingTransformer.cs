@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using FightSystem;
+using ForFunOnLevels;
 using UIScripts;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     public Joystick playerJoystick;
     [SerializeField] private PrototypeJump jump;
     [SerializeField] private VectorMovement playerMove;
+    
     
     //private bool _onGround;
     [SerializeField] private float groundCheckerRange;
@@ -21,19 +23,39 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     private static readonly int Grounded = Animator.StringToHash("Grounded");
     private static readonly int Run = Animator.StringToHash("Run");
 
+    public GameObject ladderButton;
 
     public bool isGravityActive = false;
+
+    private GameObject _ladder = null;
+    public GameObject Ladder
+    {
+        get => _ladder;
+        set
+        {
+            if (value.CompareTag("Ladder"))
+            {
+                _ladder = value;
+            }
+        }
+    }
+
+    public void LadderUse()
+    {
+        if(_ladder != null) _ladder.GetComponent<Ladder>().PlayerLadderTeleportation(gameObject);
+    }
 
     private void Start()
     {
         Application.targetFrameRate = OptionMenu.TargetFrameRate;
+        ladderButton.SetActive(false);
         _playerAnimator = GetComponent<Animator>();
         _playerFightSystem = GetComponent<ProgrammingPlayerFightSystem>();
     }
 
     private void PlayerMovement()
     {
-        var playerCanMove = !_playerFightSystem.isPlayerAttack && !_playerFightSystem.isPlayerStun &&
+        var playerCanMove = /*!_playerFightSystem.isPlayerAttack &&*/ !_playerFightSystem.isPlayerStun &&
                             !_playerFightSystem.isPlayerBlock;
         if (playerJoystick.Horizontal != 0 && playerCanMove)
         {
@@ -49,7 +71,7 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     }
     public void Jump()
     {
-        if (!_playerFightSystem.isPlayerStun || !_playerFightSystem.isPlayerAttack || !_playerFightSystem.isPlayerBlock && jump.jumpCount != 0)
+        if (!_playerFightSystem.isPlayerStun /*|| !_playerFightSystem.isPlayerAttack*/ || !_playerFightSystem.isPlayerBlock && jump.jumpCount != 0)
         {
             isGravityActive = false;
             jump.PlayerJump(_playerAnimator);

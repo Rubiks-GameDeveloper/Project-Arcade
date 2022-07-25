@@ -9,15 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 0d445f5a4fbcbd54d83880fcad853aac
   - enabled: 1
-    path: Assets/Scenes/Prototype.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
     path: Assets/Scenes/FirstLocation.unity
-    guid: 2c710314ac8fb5b4a9a9daeea909463f
-  - enabled: 0
-    path: Assets/Scenes/Squirrels.unity
-    guid: e47c00694b5aea449a282b65b0af2e0a
+    guid: 98a4f67ef8d88444da13cb8d8babc499
   - enabled: 1
     path: Assets/Scenes/Chaxta.unity
     guid: dc4a90ab5eb5bbc448a59181f904936c
+  - enabled: 1
+    path: Assets/Scenes/Prototype.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
