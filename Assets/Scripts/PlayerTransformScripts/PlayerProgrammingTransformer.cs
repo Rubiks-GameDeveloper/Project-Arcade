@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using FightSystem;
 using ForFunOnLevels;
 using UIScripts;
@@ -24,10 +25,12 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     private static readonly int Run = Animator.StringToHash("Run");
 
     public GameObject ladderButton;
+    
+    public float xMoveVector;
 
     public bool isGravityActive = false;
 
-    private GameObject _ladder = null;
+    private GameObject _ladder;
     public GameObject Ladder
     {
         get => _ladder;
@@ -84,15 +87,12 @@ public class PlayerProgrammingTransformer : MonoBehaviour
         var res = Physics2D.OverlapBoxNonAlloc(groundChecker.position, size, 0, colliders);
         if (res > 1)
         {
-            foreach (var item in colliders)
+            if (colliders.Any(item => item != null && item.gameObject.CompareTag("Ground")))
             {
-                if (item != null && item.gameObject.CompareTag("Ground"))
-                {
-                    _playerAnimator.SetBool(Grounded, true);
-                    if (jump.jumpCount < 1) StartCoroutine(JumpCountReceive());
-                    //isGravityActive = false;
-                    return;
-                }
+                _playerAnimator.SetBool(Grounded, true);
+                if (jump.jumpCount < 1) StartCoroutine(JumpCountReceive());
+                isGravityActive = false;
+                return;
             }
         }
 
@@ -140,7 +140,7 @@ public class PlayerProgrammingTransformer : MonoBehaviour
         ArtificialGravity();
         GroundChecker();
         PlayerMovement();
-        if (Input.GetButtonDown("Jump")) Jump();
+        if (Input.GetButton("Jump")) Jump();
     }
 
     private void ArtificialGravity()
