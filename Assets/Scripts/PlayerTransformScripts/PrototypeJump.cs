@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -21,18 +22,28 @@ public class PrototypeJump : MonoBehaviour
     {
         _rb = gameObject.GetComponent<Rigidbody2D>();
     }
-    private void PlayAnimation(Animator animator)
+
+    private void Update()
     {
-        if (jumpCount == 2)
+        //print(_currentJump);
+    }
+
+    public void PlayAnimation(Animator animator)
+    {
+        switch (jumpCount)
         {
-            jumpCount -= 1;
-            StartCoroutine(AnimationPlaying(animator));
-        }
-        else if (jumpCount == 1)
-        {
-            jumpCount -= 1;
-            StopAllCoroutines();
-            StartCoroutine(AnimationPlaying(animator));
+            case 2:
+                print("Operation complete");
+                jumpCount -= 1;
+                _currentJump = StartCoroutine(AnimationPlaying(animator));
+                break;
+            case 1:
+                jumpCount -= 1;
+                StopAllCoroutines();
+                _currentJump = StartCoroutine(AnimationPlaying(animator));
+                break;
+            case 0:
+                break;
         }
     }
 

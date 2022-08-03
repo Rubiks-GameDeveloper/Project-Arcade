@@ -35,7 +35,8 @@ namespace FightSystem
         [SerializeField] private Transform interactionPoint;
         public float stunTime;
 
-
+        private RotateClass _rotateClass;
+        
         private float _currentSpeed;
 
         private Color _enemyMainColor;
@@ -88,6 +89,7 @@ namespace FightSystem
         {
             //_stateMachine.Initialize(EnemyStandingState);
             //Startup();
+            _rotateClass = new RotateClass(gameObject);
         }
         /*private void FixedUpdate()
         {
@@ -133,11 +135,11 @@ namespace FightSystem
         {
             if (transform.rotation.y == 0)
             {
-                obj.GetComponent<Rigidbody2D>().AddForce(Vector2.left * powerForce, ForceMode2D.Impulse);
+                //obj.GetComponent<Rigidbody2D>().AddForce(Vector2.left * powerForce, ForceMode2D.Impulse);
             }
             else
             {
-                obj.GetComponent<Rigidbody2D>().AddForce(Vector2.right * powerForce, ForceMode2D.Impulse);
+                //obj.GetComponent<Rigidbody2D>().AddForce(Vector2.right * powerForce, ForceMode2D.Impulse);
             }
         }
         private IEnumerator EnemyColorChanging()
@@ -208,7 +210,12 @@ namespace FightSystem
         private BehaviourTreeStatus EnemyMovement()
         {
             var player = reactingToPlayer.player;
-            if (player != null) vectorMovement.Move(CoordinatePlayerPosition(player), _currentSpeed);
+            if (player != null)
+            {
+                animator.SetInteger("AnimState", 2);
+                vectorMovement.Move(CoordinatePlayerPosition(player), _currentSpeed);
+            }
+            else animator.SetInteger("AnimState", 0);
             return BehaviourTreeStatus.Running;
         }
 
@@ -216,13 +223,13 @@ namespace FightSystem
         {
             if (player.transform.position.x + attackRange - 0.3f  < transform.position.x)
             {
-                transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+                _rotateClass.TurnRight();
                 _currentSpeed = enemyFollowingSpeed;
                 return Vector3.left;
             }
             if (player.transform.position.x - attackRange + 0.3f > transform.position.x)
             {
-                transform.rotation = Quaternion.AngleAxis(180, Vector3.down);
+                _rotateClass.TurnLeft();
                 _currentSpeed = enemyFollowingSpeed;
                 return Vector3.right;
             }
@@ -234,6 +241,7 @@ namespace FightSystem
         private BehaviourTreeStatus PrepareToAttack()
         {
             //GetComponent<SpriteRenderer>().color = Color.red;
+            animator.SetInteger("AnimState", 1);
             if (_nextAttackTime <= Time.time) animator.SetTrigger("Attack");
             return BehaviourTreeStatus.Running;
         }
@@ -249,13 +257,11 @@ namespace FightSystem
                     if (dataEnemy != null && dataEnemy.CompareTag("Player") && !isEnemyStun)
                     {
                         var playerFightComponent = dataEnemy.GetComponent<ProgrammingPlayerFightSystem>();
-                        var isPlayerBlock = dataEnemy.transform.rotation.y == transform.rotation.y &&
+                        var isPlayerBlock = dataEnemy.GetComponent<PlayerProgrammingTransformer>().RotateClass.CurrentRotationState != _rotateClass.CurrentRotationState &&
                                             playerFightComponent.isPlayerBlock;
-                        if (!isPlayerBlock)
-                        {
-                            playerFightComponent.PlayerDamageTaking(enemyDamage);
-                            ObjectPushing(dataEnemy.transform, pushingForce);
-                        }
+                        if (!isPlayerBlock) continue;
+                        playerFightComponent.PlayerDamageTaking(enemyDamage);
+                        ObjectPushing(dataEnemy.transform, pushingForce);
                     }
                 }
                 _nextAttackTime = Time.time + 1f / attackSpeed;
@@ -263,7 +269,6 @@ namespace FightSystem
         }
         private bool IsPlayerInAttackRange()
         {
-            print(1);
             if (reactingToPlayer.player != null)
                 return PlayerDistanceToEnemy(transform.position, reactingToPlayer.player.transform.position) <=
                        attackRange;
@@ -272,6 +277,7 @@ namespace FightSystem
 
         private bool IsPlayerInVision()
         {
+            print(reactingToPlayer.isPlayerInVision);
             return reactingToPlayer.isPlayerInVision;
         }
     }

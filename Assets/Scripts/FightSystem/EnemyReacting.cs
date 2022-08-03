@@ -11,14 +11,15 @@ namespace FightSystem
         
         private void OnTriggerEnter2D(Collider2D other)
         {
-            //if (other.CompareTag("Player")) data.EnemyAngryStateActivate();
             if (!other.CompareTag("Player")) return;
-            isPlayerInVision = true; player = other.gameObject;
+            isPlayerInVision = true; 
+            player = other.gameObject;
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.CompareTag("Player")) isPlayerInVision = false;
+            if (other.CompareTag("Player")) 
+                isPlayerInVision = false;
             player = null;
         }
     }
