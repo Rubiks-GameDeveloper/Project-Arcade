@@ -27,23 +27,7 @@
   <component name="ChangeListManager">
     <list default="true" id="937acea6-2954-430e-8f2a-53aaaf66f35a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Bandits - Pixel Art/Animations/Light Bandit/LightBandit_AnimController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Bandits - Pixel Art/Animations/Light Bandit/LightBandit_AnimController.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Hero Knight - Pixel Art/Animations/HeroKnight_AnimController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Hero Knight - Pixel Art/Animations/HeroKnight_AnimController.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/PhysicsMaterial/PlayerMaterial.physicsMaterial2D" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/PhysicsMaterial/PlayerMaterial.physicsMaterial2D" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/PlayerWithCameraAndCanvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/PlayerWithCameraAndCanvas.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/FirstLocation.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/FirstLocation.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/FirstLocation/Global Volume Profile 1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/FirstLocation/Global Volume Profile 1.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Prototype.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Prototype.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FightSystem/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/Enemy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FightSystem/EnemyReacting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/EnemyReacting.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PlayerProgrammingTransformer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PlayerProgrammingTransformer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PrototypeJump.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PrototypeJump.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/Dissolve.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Shaders/Dissolve.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Elements/Black/shieldIcon.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Elements/Black/shieldIcon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/UI Elements/Black/shieldIcon.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UI Elements/Black/shieldIcon.png.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/RiderScriptEditorPersistedState.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/RiderScriptEditorPersistedState.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,7 +214,7 @@
       <workItem from="1659304914093" duration="2602000" />
       <workItem from="1659371736336" duration="5039000" />
       <workItem from="1659454548488" duration="8590000" />
-      <workItem from="1659533252962" duration="2845000" />
+      <workItem from="1659533252962" duration="4403000" />
     </task>
     <servers />
   </component>
