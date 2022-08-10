@@ -2235,10 +2235,6 @@ PlayableDirector:
     value: {fileID: 1175985474}
   - key: {fileID: -3015604877941986651, guid: 4b4a6620d11e6bc40a055dfa90dc22be, type: 2}
     value: {fileID: 492096422}
-  - key: {fileID: 6501120722865822369, guid: 4b4a6620d11e6bc40a055dfa90dc22be, type: 2}
-    value: {fileID: 0}
-  - key: {fileID: 6112782456860505967, guid: 4b4a6620d11e6bc40a055dfa90dc22be, type: 2}
-    value: {fileID: 0}
   - key: {fileID: -654649434331408214, guid: 4b4a6620d11e6bc40a055dfa90dc22be, type: 2}
     value: {fileID: 1436870407}
   - key: {fileID: 8754008991765185670, guid: 4b4a6620d11e6bc40a055dfa90dc22be, type: 2}
