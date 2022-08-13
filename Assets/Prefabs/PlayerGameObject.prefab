@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 7579623012229026746}
   m_Layer: 7
   m_Name: PlayerGameObject
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,6 +35,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -2.08, z: -0.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4269230616159916651}
   - {fileID: 4269230615371660210}
@@ -52,6 +53,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -109,7 +111,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 4.1666665, y: 2.2916667}
+    oldSize: {x: 3.125, y: 1.71875}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -156,7 +158,11 @@ MonoBehaviour:
   playerMove: {fileID: 4269230615121365186}
   groundCheckerRange: 0.45
   playerSpeed: 8
+  playerFallSpeed: 0
   groundChecker: {fileID: 4269230616159916651}
+  ladderButton: {fileID: 0}
+  xMoveVector: 0
+  isGravityActive: 0
 --- !u!114 &4269230615121365189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,6 +201,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   timeDuration: 0.3
   height: 0.08
+  upTimeCoefficient: 0
   jumpPosition: {x: 0, y: 0, z: 0}
   jumpCount: 2
 --- !u!114 &4269230615121365186
@@ -225,7 +232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!95 &4269230615121365185
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -238,6 +245,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -297,6 +305,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.867, y: 0.893, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4269230615121365191}
   m_RootOrder: 1
@@ -327,6 +336,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4269230615121365191}
   m_RootOrder: 0
