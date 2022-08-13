@@ -11,7 +11,8 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     public Joystick playerJoystick;
     [SerializeField] private PrototypeJump jump;
     [SerializeField] private VectorMovement playerMove;
-    
+
+    public RotateClass RotateClass;
     
     //private bool _onGround;
     [SerializeField] private float groundCheckerRange;
@@ -24,6 +25,7 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     private static readonly int Grounded = Animator.StringToHash("Grounded");
     private static readonly int Run = Animator.StringToHash("Run");
 
+    [SerializeField] private ParticleSystem dirtParticles;
     public GameObject ladderButton;
     
     public float xMoveVector;
@@ -50,6 +52,8 @@ public class PlayerProgrammingTransformer : MonoBehaviour
 
     private void Start()
     {
+        dirtParticles.Pause();
+        RotateClass = new RotateClass(gameObject);
         Application.targetFrameRate = OptionMenu.TargetFrameRate;
         ladderButton.SetActive(false);
         _playerAnimator = GetComponent<Animator>();
@@ -63,35 +67,39 @@ public class PlayerProgrammingTransformer : MonoBehaviour
         if (playerJoystick.Horizontal != 0 && playerCanMove)
         {
             _playerAnimator.SetBool(Run, true);
+            if (!dirtParticles.isPlaying && !isGravityActive) dirtParticles.Play();
             playerMove.Move(new Vector2(playerJoystick.Horizontal, 0), playerSpeed, jump.jumpPosition);
             if (playerJoystick.Horizontal < 0)
-                gameObject.transform.rotation = Quaternion.AngleAxis(180f, Vector3.down);
+                RotateClass.TurnLeft();
             else if (playerJoystick.Horizontal >= 0)
-                gameObject.transform.rotation = Quaternion.AngleAxis(0, Vector3.up);
+                RotateClass.TurnRight();
         }
         else if (playerCanMove && jump.jumpPosition != Vector3.zero) playerMove.Move(Vector3.zero, 0, jump.jumpPosition);
-        else _playerAnimator.SetBool(Run, false);
+        else
+        {
+            _playerAnimator.SetBool(Run, false);
+        }
     }
     public void Jump()
     {
-        if (!_playerFightSystem.isPlayerStun /*|| !_playerFightSystem.isPlayerAttack*/ || !_playerFightSystem.isPlayerBlock && jump.jumpCount != 0)
+        if ((!_playerFightSystem.isPlayerStun || !_playerFightSystem.isPlayerBlock) && jump.jumpCount != 0)
         {
             isGravityActive = false;
-            jump.PlayerJump(_playerAnimator);
+            jump.PlayAnimation(_playerAnimator);
         }
     }
     private void GroundChecker()
     {
-        Collider2D[] colliders = new Collider2D[25];
+        var colliders = new Collider2D[25];
         var size = new Vector2(groundCheckerRange, 0.25f);
         var res = Physics2D.OverlapBoxNonAlloc(groundChecker.position, size, 0, colliders);
         if (res > 1)
         {
             if (colliders.Any(item => item != null && item.gameObject.CompareTag("Ground")))
             {
+                isGravityActive = false; 
+                if (jump.jumpPosition == Vector3.zero) jump.jumpCount = 2;
                 _playerAnimator.SetBool(Grounded, true);
-                if (jump.jumpCount < 1) StartCoroutine(JumpCountReceive());
-                isGravityActive = false;
                 return;
             }
         }
@@ -101,11 +109,11 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     }
     private void JumpStopper()
     {
-        jump.StopAllCoroutines();
+        //jump.StopAllCoroutines();
         jump.jumpPosition = Vector3.zero;
         isGravityActive = true;
     }
-    private void OnCollisionEnter2D(Collision2D other)
+    /*private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.contactCount < 1) return;
         for (var a = 0; a < other.contactCount; a++)
@@ -116,11 +124,10 @@ public class PlayerProgrammingTransformer : MonoBehaviour
             if (other.contacts[a].point.y > gameObject.transform.position.y + 0.5f) JumpStopper();
             if (!(other.contacts[a].point.y < gameObject.transform.position.y + 0.2f)) continue;
 
-            _playerAnimator.SetBool(Grounded, true);
+            //_playerAnimator.SetBool(Grounded, true);
         }
-    }
-
-    private void OnCollisionExit2D(Collision2D other)
+    }*/
+    /*private void OnCollisionExit2D(Collision2D other)
     {
         if (other.contactCount == 0)
         {
@@ -132,15 +139,14 @@ public class PlayerProgrammingTransformer : MonoBehaviour
     {
         yield return new WaitForSeconds(0.15f);
         if (jump.jumpCount < 2) jump.jumpCount = 2;
-    }
-    
-    
+    }*/
+
     private void FixedUpdate()
     {
         ArtificialGravity();
         GroundChecker();
         PlayerMovement();
-        if (Input.GetButton("Jump")) Jump();
+        //if (Input.GetButton("Jump")) Jump();
     }
 
     private void ArtificialGravity()

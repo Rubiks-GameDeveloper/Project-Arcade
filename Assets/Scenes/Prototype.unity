@@ -194,7 +194,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 263880712}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: da8d37bac71087641818da158c161401, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -269,6 +269,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 874153879, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: b124a12ddfcfcce4b9d928958e3d75dd, type: 2}
+    - target: {fileID: 4173969154091072898, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: b124a12ddfcfcce4b9d928958e3d75dd, type: 2}
     - target: {fileID: 4173969154091072899, guid: 2e6fabb8b7ec45b4ab24f967bc838cd2, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -393,7 +401,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 780992180}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: da8d37bac71087641818da158c161401, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
