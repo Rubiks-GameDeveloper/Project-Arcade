@@ -182,11 +182,11 @@ namespace FightSystem
         {
             var builder = new BehaviourTreeBuilder();
             _treeNode = builder
-                .Parallel("All", 1, 1)
+                .Parallel("All", 1, 0)
                     .Do("Movement", t => EnemyMovement())
                     .Selector("Another one")
-                        .Condition("Is Player in vision", t => !IsPlayerInVision())
-                        .Do("Attack", t => EnemyMovement())
+                        //.Condition("Is Player in vision", t => !IsPlayerInVision())
+                        //.Do("Attack", t => EnemyMovement())
                     .End()
                     .Selector("Player attack range")
                         .Condition("Is player in attack range", t => !IsPlayerInAttackRange())
