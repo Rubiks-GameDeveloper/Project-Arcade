@@ -19,7 +19,7 @@ namespace TrapsScripts
 
         private IEnumerator CreatureDie(GameObject creature)
         {
-            if (creature.CompareTag("Player"))
+            if (creature.layer == 7)
             {
                 var player = creature.GetComponent<ProgrammingPlayerFightSystem>();
                 while (player.currentPlayerHealth > 0)
@@ -28,14 +28,14 @@ namespace TrapsScripts
                     yield return new WaitForSeconds(0.35f);
                 }
             }
-            else
+            else if (creature.layer == 6)
             {
-                var enemy = creature.GetComponent<Enemy>();
-                while (enemy.enemyHealth > 0)
-                {
+                //var enemy = creature.GetComponent<Enemy>();
+                //while (enemy.enemyHealth > 0)
+                //{
                     //StartCoroutine(enemy.DamageTaking(2));
-                    yield return new WaitForSeconds(0.35f);
-                }
+                    //yield return new WaitForSeconds(0.35f);
+                //}
             }
         }
     }

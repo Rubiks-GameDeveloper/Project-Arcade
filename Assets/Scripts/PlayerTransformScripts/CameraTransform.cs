@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
@@ -7,6 +8,10 @@ public class CameraTransform : MonoBehaviour
     [SerializeField] private GameObject player;
 
     [SerializeField] private VariableJoystick joystick;
+
+    [SerializeField] private Vector3 offset;
+    [SerializeField] private float xLimit = 0f;
+    [SerializeField] private float yLimit = 0f;
     
     [SerializeField] private AnimationCurve cameraSizeChangingCurve;
     [SerializeField] private float height;
@@ -15,7 +20,7 @@ public class CameraTransform : MonoBehaviour
     [SerializeField] private float duration = 0.5f;
 
     [SerializeField] private float velocity = 0.3f;
-    
+
     private void Start()
     {
         gameObject.transform.position += new Vector3(0, 2, 0);
@@ -30,7 +35,9 @@ public class CameraTransform : MonoBehaviour
     {
         var cameraPos = gameObject.transform.position;
         var playerPos = player.transform.position;
-        Vector3 endCameraPos = new Vector3(playerPos.x + 1, playerPos.y + 3.5f, cameraPos.z);
+        var cameraXPos = Mathf.Clamp(playerPos.x + 1 + offset.x, yLimit , float.MaxValue);
+        var cameraYPos = Mathf.Clamp(playerPos.y + 3.5f + offset.y, xLimit, float.MaxValue);
+        var endCameraPos = new Vector3(cameraXPos, cameraYPos, cameraPos.z);
         gameObject.transform.position = Vector3.Lerp(cameraPos, endCameraPos, Time.fixedDeltaTime * velocity);
     }
 

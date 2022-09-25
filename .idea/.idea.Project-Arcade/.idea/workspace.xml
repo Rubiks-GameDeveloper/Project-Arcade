@@ -25,15 +25,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="937acea6-2954-430e-8f2a-53aaaf66f35a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project-Arcade/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/AnimatingEnemyTest.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/AnimatingEnemyTest.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/PlayerWithCameraAndCanvas.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/PlayerWithCameraAndCanvas.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/FirstLocation.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/FirstLocation.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Prototype.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Prototype.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/FightSystem/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/FightSystem/Enemy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
-    </list>
+    <list default="true" id="937acea6-2954-430e-8f2a-53aaaf66f35a" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,18 +46,25 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/CameraTransform.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/ArrowMove.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/JumpStopper.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/AstarPathfindingProject/Core/AI/AIPath.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../State Machine for Unity Final/Assets/RW/Scripts/StateMachine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/FightSystem/ProgrammingPlayerFightSystem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/FightSystem/SuperSquirrel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TrapsScripts/Spikes.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/FightSystem/EnemyReacting.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Maze tester/Assets/Scripts/SkillApplier.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/FightSystem/Projectile.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/ForFunOnLevels/Ladder.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/ForFunOnLevels/MovingPlatform.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/AdditionalMethods/State.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/AdditionalMethods/StateMachine.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Joystick Pack/Scripts/Joysticks/VariableJoystick.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/VectorMovement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PrototypeJump.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/AstarPathfindingProject/Modifiers/AlternativePath.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/PlayerProgrammingTransformer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/PlayerTransformScripts/SurfaceCollector.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/FightSystem/Enemy.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -90,7 +89,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="SWEA" />
   </component>
   <component name="ProjectId" id="21C8YVYdG5MyzhHceuKEzbuOAGO" />
   <component name="ProjectViewState">
@@ -104,7 +103,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="rider.run.widget.enabled.cache" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="SolutionBuilderGeneralOptionsPageId" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
@@ -128,6 +127,10 @@
       </option>
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Attach to Unity Editor.Attach to Unity Editor" />
+      <item itemvalue="Attach to Unity Editor.Attach to Unity Editor &amp; Play" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -224,6 +227,36 @@
       <workItem from="1660400089420" duration="2169000" />
       <workItem from="1660477102484" duration="1173000" />
       <workItem from="1660513102953" duration="581000" />
+      <workItem from="1660577401784" duration="15880000" />
+      <workItem from="1660845387840" duration="9278000" />
+      <workItem from="1661076538013" duration="594000" />
+      <workItem from="1661176297137" duration="585000" />
+      <workItem from="1661435627805" duration="5612000" />
+      <workItem from="1661464819654" duration="2809000" />
+      <workItem from="1661526849218" duration="1755000" />
+      <workItem from="1661619312522" duration="5865000" />
+      <workItem from="1662652228462" duration="2486000" />
+      <workItem from="1662727688291" duration="591000" />
+      <workItem from="1662753626774" duration="6265000" />
+      <workItem from="1663077920785" duration="5720000" />
+      <workItem from="1663095440472" duration="967000" />
+      <workItem from="1663156964011" duration="4549000" />
+      <workItem from="1663182222150" duration="5296000" />
+      <workItem from="1663251736502" duration="1109000" />
+      <workItem from="1663408622716" duration="355000" />
+      <workItem from="1663418141868" duration="586000" />
+      <workItem from="1663503265522" duration="581000" />
+      <workItem from="1663518259832" duration="4012000" />
+      <workItem from="1663610184778" duration="6830000" />
+      <workItem from="1663681048663" duration="4810000" />
+      <workItem from="1663697846673" duration="4209000" />
+      <workItem from="1663752292015" duration="8742000" />
+      <workItem from="1663785143242" duration="4440000" />
+      <workItem from="1663834141221" duration="12878000" />
+      <workItem from="1663938745088" duration="1830000" />
+      <workItem from="1664031518956" duration="4693000" />
+      <workItem from="1664050545365" duration="584000" />
+      <workItem from="1664094219838" duration="787000" />
     </task>
     <servers />
   </component>
@@ -260,7 +293,12 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
+    <expand>
+      <path>
+        <item name="Project-Arcade" type="b2602c69:ProjectViewProjectNode" />
+        <item name="rider.module" type="47feb1d3:ProjectViewModuleNode" />
+      </path>
+    </expand>
     <select />
   </component>
 </project>

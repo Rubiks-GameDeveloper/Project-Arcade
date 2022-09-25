@@ -9,6 +9,7 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField] private float distance1;
     [SerializeField] private float distance2;
     private bool movingRight = true;
+    private Transform _objectParent;
     
     void Update()
     {
@@ -33,11 +34,15 @@ public class MovingPlatform : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player")) collision.transform.SetParent(gameObject.transform);
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            _objectParent = collision.transform.parent;
+            collision.transform.SetParent(gameObject.transform);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Player")) other.transform.SetParent(default);
+        if (other.gameObject.CompareTag("Player")) other.transform.SetParent(_objectParent);
     }
 }

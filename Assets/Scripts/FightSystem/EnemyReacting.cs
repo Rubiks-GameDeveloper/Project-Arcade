@@ -12,10 +12,9 @@ namespace FightSystem
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.CompareTag("Player")) return;
-            isPlayerInVision = true; 
+            isPlayerInVision = true;
             player = other.gameObject;
         }
-
         private void OnTriggerExit2D(Collider2D other)
         {
             if (other.CompareTag("Player")) 

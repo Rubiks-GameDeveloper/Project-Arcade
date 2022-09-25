@@ -1,193 +1,113 @@
-using System;
 using System.Collections;
-using AdditionalMethods;
-using FightSystem.EnemyStates;
 using UnityEngine;
 using FluentBehaviourTree;
+using Quaternion = UnityEngine.Quaternion;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 namespace FightSystem
 {
+    [RequireComponent(typeof(VectorMovement))]
+    [RequireComponent(typeof(SurfaceCollector))]
     public class Enemy : MonoBehaviour
     {
-        public Transform groundChecker;
-        public float groundCheckerRange;
-    
+        [Header("Fight property")]
+        [SerializeField] private AttackType attackType = AttackType.Melee;
+        [SerializeField] private GameObject projectilePrefab;
+        [SerializeField] private float projectileLifetime = 5;
+        [SerializeField] private float projectileSpeed = 2;
+        [SerializeField] private float pushingForce;
+        private GameObject _projectileData;
         public int enemyHealth;
         public int enemyArmor;
         private float _nextAttackTime;
         public float attackSpeed;
         public float enemyDamage;
-        public float enemyAngryDistance;
-
-        public VectorMovement vectorMovement;
-        [SerializeField] private EnemyReacting reactingToPlayer;
-
-        [Header("Values for patrol")] 
-        [SerializeField] private Transform patrolPointLeft;
-        [SerializeField] private Transform patrolPointRight;
-        public float patrolWaitTime;
-        [Range(0.01f, 1.5f)] public float patrolSpeed;
-    
-        [Header("Values for reacting on events")]
-        [Range(0.01f, 2.5f)] public float enemyFollowingSpeed; 
         public float attackRange;
-        public float pushingForce;
-        [SerializeField] private Transform interactionPoint;
-        public float stunTime;
-
+        private float _playerDamage;
+        [Space]
+        
+        [Header("Movement")]
+        [SerializeField] private float jumpForce = 15;
+        [Range(0.01f, 1.5f)] public float patrolSpeed;
+        [SerializeField] private float patrolRange = 0;
+        public VectorMovement vectorMovement;
         private RotateClass _rotateClass;
+        private IBehaviourTreeNode _treeNode;
+        private PrototypeJump _prototypeJump;
+        [Space]
         
-        private float _currentSpeed;
-
-        private Color _enemyMainColor;
-        #region OldProperty
+        [Header("Reaction range")]
+        [SerializeField] private EnemyReacting reactingToPlayer;
+        [SerializeField] private GameObject reactionTrigger;
+        public float patrolWaitTime;
         public float playerDetectionRange;
-
+        private Rigidbody2D _rb;
+        private GameObject _player;
+        [Space]
+        
+        [Header("Graphics")]
         public Animator animator;
-
-        private StateMachine _stateMachine;
+        [SerializeField] private ParticleSystem runningParticles;
+        [Space]
         
-        //All enemy states 
-        private EnemyGroundedState _enemyGroundedState;
-        public EnemyStandingState EnemyStandingState;
-        public EnemyPatrolState EnemyPatrolState;
-        public EnemyAngryState EnemyAngryState;
-        private EnemyHurtState _enemyHurtState;
-        
-        
-        public bool isEnemyStun;
-        public bool isEnemyWait;
-        public bool isEnemyAttack;
-        
-        private State _isEnemyInAccessible;
-        private State _isEnemyAttack;
+        private bool _isPatrollingLeft = true;
+        private bool _isPatrollingRight;
+        private bool _isWaiting;
 
-        public float playerDamage;
+        private Vector3 _startPosition;
+        private Vector3 _currentMoveDirection;
 
-        private IEnumerator _enemyDataCoroutine;
-
-        private readonly StateMachine _enemyStateMachine = new StateMachine();
         private static readonly int Death = Animator.StringToHash("Death");
-        #endregion
-        #region OldRealization
         private void Awake()
         {
-            _enemyMainColor = GetComponent<SpriteRenderer>().color;
-            
-            /*_stateMachine = new StateMachine();
-
-            EnemyAngryState = new EnemyAngryState(this, _stateMachine);
-            _enemyHurtState = new EnemyHurtState(this, _stateMachine);
-            _enemyGroundedState = new EnemyGroundedState(this, _stateMachine);
-            EnemyStandingState = new EnemyPatrolState(this, _stateMachine);
-            EnemyPatrolState = new EnemyPatrolState(this, _stateMachine);
-            */
             animator = GetComponent<Animator>();
-            Startup();
+            switch (attackType)
+            {
+                case AttackType.Melee:
+                    StartupMelee();
+                    break;
+                case AttackType.Range:
+                    StartupRange();
+                    break;
+                default:
+                    StartupMelee();
+                    break;
+            }
         }
         private void Start()
         {
-            //_stateMachine.Initialize(EnemyStandingState);
-            //Startup();
             _rotateClass = new RotateClass(gameObject);
-        }
-        /*private void FixedUpdate()
-        {
-            _stateMachine.CurrentState.HandleInput();
-            _stateMachine.CurrentState.LogicUpdate();
-            _stateMachine.CurrentState.PhysicsUpdate();
-        }*/
-        public void EnemyAngryStateActivate()
-        {
-            _stateMachine.ChangeState(EnemyAngryState);
+            _rb = GetComponent<Rigidbody2D>();
+            if (attackType == AttackType.Range) reactionTrigger.SetActive(false);
+            _startPosition = transform.position;
         }
         public void DamageTaking(float damage)
         {
-            playerDamage = damage;
-            _stateMachine.ChangeState(_enemyHurtState);
+            _playerDamage = damage;
+            enemyHealth -= (int)_playerDamage;
+            if (enemyHealth <= 0) animator.SetTrigger(Death);
         }
         public void EnemyDisabling()
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
-        public IEnumerator EnemyStunning(float stunClock)
+        private void StartupRange()
         {
-            isEnemyStun = true;
-            yield return new WaitForSeconds(stunClock);
-            isEnemyStun = false;
+            var builder = new BehaviourTreeBuilder();
+            _treeNode = builder
+                .Selector("Player in Attack range")
+                    .Condition("Is Player in Attack range?", t => !IsPlayerInVision())
+                        .Do("Throw the projectile", t => PrepareToAttack())
+                    .End()
+                .Build();
         }
-        public IEnumerator EnemyWaiting(float waitTime)
-        {
-            animator.SetInteger("AnimState", 0);
-            isEnemyWait = true;
-            yield return new WaitForSeconds(waitTime);
-            isEnemyWait = false;
-        }
-        private void Damage()
-        {
-            //EnemyAngryState.Attack();
-        }
-        private void AttackComplete()
-        {
-            isEnemyAttack = false;
-        }
-        private void ObjectPushing(Transform obj, float powerForce)
-        {
-            if (transform.rotation.y == 0)
-            {
-                //obj.GetComponent<Rigidbody2D>().AddForce(Vector2.left * powerForce, ForceMode2D.Impulse);
-            }
-            else
-            {
-                //obj.GetComponent<Rigidbody2D>().AddForce(Vector2.right * powerForce, ForceMode2D.Impulse);
-            }
-        }
-        private IEnumerator EnemyColorChanging()
-        {
-            var color = GetComponent<SpriteRenderer>().color;
-            GetComponent<SpriteRenderer>().color = Color.red;
-            yield return new WaitForSeconds(0.15f);
-            GetComponent<SpriteRenderer>().color = color;
-            StartCoroutine(EnemyStunning(stunTime));
-        }
-        public void EnemyDie()
-        {
-            if (enemyHealth <= 0)
-            {
-                GetComponent<Rigidbody2D>().gravityScale = 0;
-                GetComponent<Collider2D>().enabled = false;
-                animator.SetTrigger(Death);
-            }
-        }
-        private void OnDrawGizmos()
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(transform.position, playerDetectionRange);
-        }
-
-        #endregion
-        
-        IBehaviourTreeNode _treeNode;
-        private bool _isEnemyPatrol;
-        private bool _isEnemyPatrolLeft;
-        private bool _isEnemyPatrolRight;
-
-        private float PlayerDistanceToEnemy(Vector3 enemyPos, Vector3 player)
-        {
-            Vector2 distance = player - enemyPos;
-            return (float)Math.Sqrt(Math.Pow(distance.x, 2) + Math.Pow(distance.y, 2));
-        }
-
-        private void Startup()
+        private void StartupMelee()
         {
             var builder = new BehaviourTreeBuilder();
             _treeNode = builder
                 .Parallel("All", 1, 0)
-                    .Do("Movement", t => EnemyMovement())
-                    .Selector("Another one")
-                        //.Condition("Is Player in vision", t => !IsPlayerInVision())
-                        //.Do("Attack", t => EnemyMovement())
-                    .End()
+                    .Do("Patrolling", t => EnemyStatusPatrolling())
                     .Selector("Player attack range")
                         .Condition("Is player in attack range", t => !IsPlayerInAttackRange())
                         .Do("Attack", t => PrepareToAttack())
@@ -195,90 +115,175 @@ namespace FightSystem
                 .End()
                 .Build();
         }
-
-        private void Update()
+        private void FixedUpdate()
         {
+            if (attackType == AttackType.Melee) IsPlayerInVision();
             _treeNode.Tick(new TimeData(Time.deltaTime));
         }
-
-        private BehaviourTreeStatus EnemyStatusFollowing()
+        private IEnumerator PatrolWait(int previouslyDirection)
         {
-            _currentSpeed = enemyFollowingSpeed;
-            return BehaviourTreeStatus.Running;
+            _isWaiting = true;
+            animator.SetInteger("AnimState", 0);
+
+            yield return new WaitForSeconds(patrolWaitTime);
+            switch (previouslyDirection)
+            {
+                case 1:
+                    _rotateClass.TurnRight();
+                    _isPatrollingRight = true;
+                    _isPatrollingLeft = false;
+                    _isWaiting = false;
+                    break;
+                case -1:
+                    _rotateClass.TurnLeft();
+                    _isPatrollingLeft = true;
+                    _isPatrollingRight = false;
+                    _isWaiting = false;
+                    break;
+            }
         }
-
-        private BehaviourTreeStatus EnemyMovement()
+        private void EnemyPatrolLeft()
         {
-            var player = reactingToPlayer.player;
-            if (player != null)
+            if (_startPosition.x - patrolRange < transform.position.x)
             {
                 animator.SetInteger("AnimState", 2);
-                vectorMovement.Move(CoordinatePlayerPosition(player), _currentSpeed);
+                vectorMovement.Move(Vector3.left, patrolSpeed);
             }
-            else animator.SetInteger("AnimState", 0);
+            else
+            {
+                _isPatrollingLeft = false;
+                if (!_isWaiting) StartCoroutine(PatrolWait(1));
+                animator.SetInteger("AnimState", 0);
+            }
+        }
+        private void EnemyPatrolRight()
+        {
+            if (_startPosition.x + patrolRange > transform.position.x)
+            {
+                animator.SetInteger("AnimState", 2);
+                vectorMovement.Move(Vector3.right, patrolSpeed);
+            }
+            else
+            {
+                _isPatrollingRight = false;
+                if (!_isWaiting) StartCoroutine(PatrolWait(-1));
+                animator.SetInteger("AnimState", 0);
+            }
+        }
+        private BehaviourTreeStatus EnemyStatusPatrolling()
+        {
+            if (IsPlayerInAttackRange())
+            {
+                return BehaviourTreeStatus.Failure;
+            }
+
+            if (_isPatrollingLeft && !_isPatrollingRight && !_isWaiting)
+            {
+                EnemyPatrolLeft();
+            }
+            else if (_isPatrollingRight && !_isPatrollingLeft && !_isWaiting) EnemyPatrolRight();
+
             return BehaviourTreeStatus.Running;
         }
-
-        private Vector3 CoordinatePlayerPosition(GameObject player)
-        {
-            if (player.transform.position.x + attackRange - 0.3f  < transform.position.x)
-            {
-                _rotateClass.TurnRight();
-                _currentSpeed = enemyFollowingSpeed;
-                return Vector3.left;
-            }
-            if (player.transform.position.x - attackRange + 0.3f > transform.position.x)
-            {
-                _rotateClass.TurnLeft();
-                _currentSpeed = enemyFollowingSpeed;
-                return Vector3.right;
-            }
-
-            _currentSpeed = 0;
-            return Vector3.left;
-        }
-       
         private BehaviourTreeStatus PrepareToAttack()
         {
-            //GetComponent<SpriteRenderer>().color = Color.red;
+            
             animator.SetInteger("AnimState", 1);
-            if (_nextAttackTime <= Time.time) animator.SetTrigger("Attack");
-            return BehaviourTreeStatus.Running;
+            if (attackType == AttackType.Range && _nextAttackTime <= Time.time) Attack();
+            else if (_nextAttackTime <= Time.time && IsPlayerInAttackRange()) animator.SetTrigger("Attack");
+            return BehaviourTreeStatus.Success;
         }
-    
+        // ReSharper disable once MemberCanBePrivate.Global
+        // Its using in animation event!
         public void Attack()
         {
-            if (!isEnemyStun)
+            if (attackType == AttackType.Melee)
             {
-                Collider2D[] player = new Collider2D[20];
-                Physics2D.OverlapCircleNonAlloc(transform.position, attackRange + 2, player);
-                foreach (Collider2D dataEnemy in player)
-                {
-                    if (dataEnemy != null && dataEnemy.CompareTag("Player") && !isEnemyStun)
+                var player = new Collider2D[20];
+                Physics2D.OverlapCircleNonAlloc(transform.position, attackRange, player);
+                foreach (var dataEnemy in player)
+                    if (dataEnemy != null && dataEnemy.gameObject.layer == 7)
                     {
                         var playerFightComponent = dataEnemy.GetComponent<ProgrammingPlayerFightSystem>();
-                        var isPlayerBlock = dataEnemy.GetComponent<PlayerProgrammingTransformer>().RotateClass.CurrentRotationState != _rotateClass.CurrentRotationState &&
-                                            playerFightComponent.isPlayerBlock;
-                        if (!isPlayerBlock) continue;
+                        var isPlayerBlock =
+                            dataEnemy.GetComponent<PlayerProgrammingTransformer>().RotateClass.CurrentRotationState !=
+                            _rotateClass.CurrentRotationState &&
+                            playerFightComponent.isPlayerBlock;
+                        //if (!isPlayerBlock) continue;
                         playerFightComponent.PlayerDamageTaking(enemyDamage);
-                        ObjectPushing(dataEnemy.transform, pushingForce);
                     }
-                }
-                _nextAttackTime = Time.time + 1f / attackSpeed;
             }
+            else
+            {
+                var startPosition = transform.position + Vector3.up;
+                if (_player.transform.position.x < transform.position.x)
+                {
+                    _rotateClass.TurnLeft();
+                    startPosition += Vector3.left;
+                }
+                else
+                {
+                    _rotateClass.TurnRight();
+                    startPosition += Vector3.right;
+                }
+                _projectileData = Instantiate(projectilePrefab, startPosition, Quaternion.identity);
+                var data = _projectileData.GetComponent<Projectile>();
+                data.direction = _player.transform.position.x < transform.position.x ? ProjectileDirection.Left : ProjectileDirection.Right;
+                data.damage = enemyDamage;
+                data.projectileLifetime = projectileLifetime;
+                data.projectileSpeed = projectileSpeed;
+            }
+
+            _nextAttackTime = Time.time + 1f / attackSpeed;
         }
         private bool IsPlayerInAttackRange()
         {
             if (reactingToPlayer.player != null)
-                return PlayerDistanceToEnemy(transform.position, reactingToPlayer.player.transform.position) <=
+            {
+                if (_player.transform.position.x < transform.position.x && _rotateClass.CurrentRotationState != 1)
+                {
+                    _rotateClass.TurnLeft();
+                }
+                else if (_player.transform.position.x > transform.position.x && _rotateClass.CurrentRotationState != -1)
+                {
+                    _rotateClass.TurnRight();
+                }
+                return Vector2.Distance(transform.position, _player.transform.position) <=
                        attackRange;
-            return false; 
+            }
+            if (attackType != AttackType.Melee) return false;
+            if (_isPatrollingLeft && _rotateClass.CurrentRotationState != 1)
+            {
+                _rotateClass.TurnLeft();
+            }
+            else if (_isPatrollingRight && _rotateClass.CurrentRotationState != -1)
+            {
+                _rotateClass.TurnRight();
+            }
+            return false;
         }
-
         private bool IsPlayerInVision()
         {
-            print(reactingToPlayer.isPlayerInVision);
-            return reactingToPlayer.isPlayerInVision;
+            var size = new Collider2D[25];
+            Physics2D.OverlapCircleNonAlloc(transform.position, playerDetectionRange, size);
+            foreach (var item in size)
+            {
+                if (item != null && item.gameObject.CompareTag("Player"))
+                {
+                    _player = item.gameObject;
+                    return true;
+                }
+            }
+            return false;
+        }
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.grey;
+            var position = transform.position;
+            Gizmos.DrawWireSphere(position, attackRange);
+            Gizmos.color = Color.cyan;
+            if (attackType != AttackType.Melee) Gizmos.DrawWireSphere(position, playerDetectionRange);
         }
     }
+    public enum AttackType {Melee, Range}
 }
